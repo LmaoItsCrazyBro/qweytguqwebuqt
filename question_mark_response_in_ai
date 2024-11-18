@@ -3580,10 +3580,8 @@ local function loadGUI()
     if getgenv().hasLoadedAntiLog then
         warn("You have already loaded AntiChat Logger!")
     else
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/vqmpjayZ/More-Scripts/main/Anti-Chat-Logger", true))()
-        wait(0.5)
-        local TextChatService = game:GetService("TextChatService") or cloneref(game:GetService("TextChatService")) or game.TextChatService or game:FindService("TextChatService")
-        local Players = game:GetService("Players") or cloneref(game:GetService("Players")) or game.Players or game:FindService("Players")
+        local TextChatService = game:GetService("TextChatService")
+        local Players = game:GetService("Players")
         local LocalPlayer = Players.LocalPlayer
         local chat = TextChatService.ChatInputBarConfiguration.TargetTextChannel
         
@@ -3591,7 +3589,7 @@ local function loadGUI()
             chat:SendAsync(msg)
         end
         
-        for i = 1, 9 do
+        for i = 1, 8 do
             sendchat("   ")
         end
         wait(0.2)
