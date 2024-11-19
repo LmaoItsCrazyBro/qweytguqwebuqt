@@ -6223,20 +6223,13 @@ local function loadGUI()
     local JoinDiscordLabel = Tab15:CreateParagraph({Title = "Zacks Easy Hub", Content = "Join the discord for juicy updates, and maybe giveaways."})
     local Release_Date = Tab15:CreateParagraph({Title = "Zacks Easy Hub", Content = "V6 Released On: 11/5/2024"})
     local Scammers = Tab15:CreateParagraph({Title = "Zacks Easy Hub", Content = "If you bought this, you got scammed."})
-    local ScriptIsOpen_Source = Tab15:CreateParagraph({Title = "Zacks Easy Hub", Content = "This script is open source, but still credit me."})
     wait(0.2)
     if getgenv().camera_zoom_data then
         print("CameraMaxZoomDistance - Data | True")
     else
         getgenv().camera_zoom_data = false
         wait(0.5)
-        
-        local Players = game:GetService("Players")
-        local LocalPlayer = Players.LocalPlayer
-        local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-        local HRPBase = Character:FindFirstChild("HumanoidRootPart")
-        
-        LocalPlayer.CameraMaxZoomDistance = 800000
+        game:GetService("Players").LocalPlayer.CameraMaxZoomDistance = 800000
         getgenv().camera_zoom_data = true
         wait(0.1)
     end    
@@ -6246,9 +6239,8 @@ loadGUI()
 wait(0.3)
 print("Running...")
 wait(0.3)
-local ws = game:GetService("Workspace")
-local getFolder = ws:FindFirstChild("PartStorage") or ws:WaitForChild("PartStorage")
-local getpart = getFolder:FindFirstChildOfClass("Part") or getFolder:FindFirstChildWhichIsA("Part")
+getFolder = game:GetService("Workspace"):FindFirstChild("PartStorage") or game:GetService("Workspace"):WaitForChild("PartStorage")
+getpart = getFolder:FindFirstChildOfClass("Part") or getFolder:FindFirstChildWhichIsA("Part")
 if getFolder and getpart then
     getpart.Transparency = 1
 else
