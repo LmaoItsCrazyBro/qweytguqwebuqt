@@ -60,7 +60,7 @@ function getRoot(char)
     return rootPart
 end
 
-local Players = game:GetService("Players") or cloneref(game:GetService("Players")) or game.Players or game:FindService("Players")
+local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 
 local StarterPlayer = game:GetService("StarterPlayer")
@@ -252,8 +252,8 @@ wait(0.3)
 local Workspace = game:GetService("Workspace") or workspace
 local GameFolder = Workspace:FindFirstChild("Game")
 local GetTeleportPart = GameFolder and GameFolder:FindFirstChild("Teleport")
-local AssetService = game:GetService("AssetService") or game.AssetService
-local Asset_Service_Duplicate = game:GetService("AssetService") or game.AssetService
+local AssetService = game:GetService("AssetService")
+local Asset_Service_Duplicate = game:GetService("AssetService")
 
 if not GetTeleportPart then
     warn("Part: Teleport = nil | false | null")
@@ -266,7 +266,7 @@ end
 
 -- [] -->> Initialize Services /|\ Setup Services [Try to support every executor in the process.] <<-- [] --
 
-local Workspace = game:GetService("Workspace")
+local Workspace = game:GetService("Workspace") or workspace
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 local Character = player.Character or player.CharacterAdded:Wait()
@@ -467,7 +467,7 @@ local function loadGUI()
     local Section15 = Tab15:CreateSection("||| UI Control Section |||")
     wait(0.2)
     local TeleportService = game:GetService("TeleportService")
-    local Players = game:GetService("Players") or game.Players
+    local Players = game:GetService("Players")
     PlaceId, JobId = game.PlaceId, game.JobId
     local LocalPlayer = Players.LocalPlayer
     queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
@@ -566,6 +566,44 @@ local function loadGUI()
                 handleKeybind(action)
             end
         end)
+        wait(0.1)
+        function notify(title, content, duration)
+            Rayfield:Notify({
+                Title = tostring(title),
+                Content = tostring(content),
+                Duration = tonumber(duration),
+                Image = 4483362458,
+                Actions = {
+                    Ignore = {
+                        Name = "Okay!",
+                        Callback = function() print("...") end
+                    },
+                },
+            })
+        end
+        
+        local UserInputService = game:GetService("UserInputService")
+        local Players = game:GetService("Players")
+        local LocalPlayer = Players.LocalPlayer
+        local Audio_Device_Input = LocalPlayer.AudioDeviceInput
+
+        local isMuted = true
+        Audio_Device_Input.Muted = isMuted
+
+        local function onInputBegan(input, gameProcessed)
+            if gameProcessed then return end
+            if input.KeyCode == Enum.KeyCode.RightControl then
+                isMuted = not isMuted
+                Audio_Device_Input.Muted = isMuted
+                if isMuted then
+                    notify("Success!", "Muted Microphone", 7)
+                else
+                    notify("Success!", "Unmuted Microphone", 6.5)
+                end
+            end
+        end
+
+        UserInputService.InputBegan:Connect(onInputBegan)
     end
     wait()
     if game.Players.LocalPlayer.Name == "ItsYoDawgWsgGng" and getgenv().ownersWriteFile then
