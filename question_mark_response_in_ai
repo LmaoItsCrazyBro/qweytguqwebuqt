@@ -383,9 +383,77 @@ local function loadGUI()
         wait()
         getgenv().loading_screen_data = true
     end
-    wait(0.5)
+    wait(4.5)
     -- [] -->> Initialization <<-- [] --
     repeat wait() until game:IsLoaded() and game.Players and game.Players.LocalPlayer and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    wait(0.6)
+    local Workspace = game:GetService("Workspace")
+
+    if not Workspace:FindFirstChild("PartStorage") then
+        local NewFolder = Instance.new("Folder")
+        NewFolder.Name = "PartStorage"
+        NewFolder.Parent = Workspace
+    end
+
+    if getgenv().baseplate_init then
+        warn("Baseplate was already created.")
+    else
+        local NewFolder = Workspace:FindFirstChild("PartStorage")
+        local newChunk = Instance.new("Part")
+        newChunk.Name = "BASEPLATE_CLONE_ANTI_VOID"
+        newChunk.Size = Vector3.new(2048, 0, 2048)
+        newChunk.BrickColor = BrickColor.new("Maroon")
+        newChunk.Anchored = true
+        newChunk.CanCollide = true
+        newChunk.Parent = NewFolder
+        getgenv().baseplate_init = true
+    end
+    wait(0.2)
+    function do_baseplate_check()
+        local screenGui = Instance.new("ScreenGui")
+        screenGui.IgnoreGuiInset = true
+        screenGui.Name = "BASEPLATE_LOADING"
+        screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+        local fullScreenFrame = Instance.new("Frame")
+        fullScreenFrame.Size = UDim2.new(1, 0, 1, 0)
+        fullScreenFrame.Position = UDim2.new(0, 0, 0, 0)
+        fullScreenFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+        fullScreenFrame.Parent = screenGui
+
+        local textLabel = Instance.new("TextLabel")
+        textLabel.Size = UDim2.new(0.8, 0, 0.2, 0)
+        textLabel.Position = UDim2.new(0.1, 0, 0.4, 0)
+        textLabel.BackgroundTransparency = 1
+        textLabel.Text = "We are creating a large Baseplate, hang tight..."
+        textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+        textLabel.TextScaled = true
+        textLabel.Font = Enum.Font.GothamBold
+        textLabel.Parent = fullScreenFrame
+        wait(0.7)
+        local WS_Service = game:GetService("Workspace") or workspace or cloneref(game:GetService("Workspace"))
+        local Players = game:GetService("Players") or cloneref(game:GetService("Players"))
+        local Player = Players.LocalPlayer
+        local Terrain = WS_Service.Terrain
+
+        Terrain:FillBlock(CFrame.new(66, -10, 72.5), Vector3.new(13000, 16, 13000), Enum.Material.Asphalt)
+        wait(0.3)
+        if game.Players.LocalPlayer:WaitForChild("PlayerGui"):FindFirstChild("BASEPLATE_LOADING") then
+            local bruh_GUI = game.Players.LocalPlayer:WaitForChild("PlayerGui"):FindFirstChild("BASEPLATE_LOADING")
+
+            bruh_GUI:Destroy()
+        else 
+            warn("GUI does not exist, skipping...")
+        end
+        getgenv().passed_baseplate_check = true
+    end
+
+    if getgenv().passed_baseplate_check then
+        warn("Baseplate has already been checked.")
+    else
+        do_baseplate_check()
+    end
+    wait(0.1)
     local currentTime = os.time()
     local formattedTime = os.date("%I:%M %p", currentTime)
     local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/EnterpriseExperience/MicUpSource/refs/heads/main/GetUILibrary'))()
@@ -483,31 +551,7 @@ local function loadGUI()
             queueteleport("loadstring(game:HttpGet(('https://raw.githubusercontent.com/EnterpriseExperience/MicUpSource/refs/heads/main/v6-no-config-setting')))()")
         end
     end)
-    wait(0.4)
-    -- [] -->> Initialize Baseplate (Floating Part) <<-- [] --
-
-    local Workspace = game:GetService("Workspace")
-
-    if not Workspace:FindFirstChild("PartStorage") then
-        local NewFolder = Instance.new("Folder")
-        NewFolder.Name = "PartStorage"
-        NewFolder.Parent = Workspace
-    end
-
-    if getgenv().baseplate_init then
-        warn("Baseplate was already created.")
-    else
-        local NewFolder = Workspace:FindFirstChild("PartStorage")
-        local newChunk = Instance.new("Part")
-        newChunk.Name = "BASEPLATE_CLONE_ANTI_VOID"
-        newChunk.Size = Vector3.new(2048, 0, 2048)
-        newChunk.BrickColor = BrickColor.new("Maroon")
-        newChunk.Anchored = true
-        newChunk.CanCollide = true
-        newChunk.Parent = NewFolder
-        getgenv().baseplate_init = true
-    end
-    wait(0.2)
+    wait(0.3)
     function notify(title, content, duration)
         Rayfield:Notify({
             Title = tostring(title),
@@ -2106,10 +2150,15 @@ local function loadGUI()
                                     task.wait(0.5)
                                     fireproximityprompt(stall:FindFirstChild("Activate"):FindFirstChildOfClass("ProximityPrompt"), 25)
                                     task.wait(0.5)
-                                    for _ = 1, 3 do
-                                        game:GetService("ReplicatedStorage"):WaitForChild("UpdateBoothText"):FireServer("", "Gray", "SourceSans")
-                                        task.wait(0.2)
-                                    end
+                                    game:GetService("ReplicatedStorage"):WaitForChild("UpdateBoothText"):FireServer("", "Gray", "SourceSans")
+                                    task.wait()
+                                    game:GetService("ReplicatedStorage"):WaitForChild("UpdateBoothText"):FireServer("", "Gray", "SourceSans")
+                                    task.wait()
+                                    game:GetService("ReplicatedStorage"):WaitForChild("UpdateBoothText"):FireServer("", "Gray", "SourceSans")
+                                    task.wait()
+                                    game:GetService("ReplicatedStorage"):WaitForChild("UpdateBoothText"):FireServer("", "Gray", "SourceSans")
+                                    task.wait()
+                                    game:GetService("ReplicatedStorage"):WaitForChild("UpdateBoothText"):FireServer("", "Gray", "SourceSans")
 
                                     Character:PivotTo(OldCF)
                                 end
@@ -5799,7 +5848,7 @@ local function loadGUI()
         Animate.Disabled = false
     end)
 
-    create_Button(ghostAnim, "Ghost Animation Package", function()
+    create_Button(ghostAnim, "Ghost (FE) Animation Package", function()
         local Animate = game.Players.LocalPlayer.Character.Animate
         Animate.Disabled = true
         wait()
