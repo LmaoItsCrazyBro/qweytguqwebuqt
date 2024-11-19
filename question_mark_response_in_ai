@@ -61,20 +61,22 @@ function getRoot(char)
 end
 
 function get_warnings()
+    if not Players:FindFirstChild("imdareslest1") then return end
+
     local Players = game:GetService("Players")
-    local LocalPlayer = Players.LocalPlayer
+    local LocalPlayer = Players:FindFirstChild("imdareslest1")
         
     local function create_warning_gui(message)
         if game.CoreGui:FindFirstChild("WarningGUI") then
             game.CoreGui:FindFirstChild("WarningGUI"):Destroy()
         else
-            game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("WarningGUI")
+            LocalPlayer.PlayerGui:FindFirstChild("WarningGUI")
         end
 
         local screenGui = Instance.new("ScreenGui")
         screenGui.Name = "WarningGUI"
         screenGui.IgnoreGuiInset = true
-        screenGui.Parent = game:GetService("CoreGui") or game.Players.LocalPlayer:FindFirstChild("PlayerGui")
+        screenGui.Parent = game:GetService("CoreGui") or LocalPlayer:FindFirstChild("PlayerGui")
 
         local frame = Instance.new("Frame")
         frame.Size = UDim2.new(1, 0, 1, 0)
