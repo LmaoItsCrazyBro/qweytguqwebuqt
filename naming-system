@@ -587,7 +587,7 @@ local function loadGUI()
         local LocalPlayer = Players.LocalPlayer
         local Audio_Device_Input = LocalPlayer.AudioDeviceInput
 
-        local isMuted = true
+        local isMuted = false
         Audio_Device_Input.Muted = isMuted
 
         local function onInputBegan(input, gameProcessed)
@@ -4321,35 +4321,6 @@ local function loadGUI()
             return Notify_User("Error:", "Invisible Is Already Loaded!", 6.5)
         end
 
-        local function getRandomFarCFrame(minDistance, maxDistance)
-            local function getRandomCoordinate()
-                return math.random(minDistance, maxDistance) * (math.random(0, 1) == 0 and 1 or -1)
-            end
-        
-            return CFrame.new(getRandomCoordinate(), getRandomCoordinate(), getRandomCoordinate())
-        end
-        
-        local randomizedCFrame = getRandomFarCFrame(1500, 1975)
-
-        function generate_local_name(length, bool)
-            local Http_Service = game:GetService("HttpService") or cloneref(game:GetService("HttpService"))
-            
-            local function generateGUIDWithFormat()
-                local guid = Http_Service:GenerateGUID(bool)
-                return guid
-            end
-        
-            local generatedGUID = generateGUIDWithFormat()
-        
-            if #generatedGUID > length then
-                return string.sub(generatedGUID, 1, length)
-            end
-            
-            return generatedGUID
-        end
-        
-        local gen_name = generate_local_name(36, false)
-
         local UserIds = {
             6132973250,
             4437551748,
@@ -4378,9 +4349,9 @@ local function loadGUI()
         Part = Instance.new("Part", Workspace_Service)
         Part.Anchored = true
         Part.Size = Vector3.new(200, 1, 200)
-        Part.CFrame = randomizedCFrame
+        Part.CFrame = CFrame.new(9999, 50, 999)
         Part.CanCollide = true
-        Part.Name = ""
+        Part.Name = "BasePart"
         
         FakeCharacter.Parent = Workspace_Service
         FakeCharacter.HumanoidRootPart.CFrame = Part.CFrame * CFrame.new(0, 5, 0)
@@ -4420,9 +4391,9 @@ local function loadGUI()
             Part = Instance.new("Part", Workspace_Service)
             Part.Anchored = true
             Part.Size = Vector3.new(200, 1, 200)
-            Part.CFrame = randomizedCFrame
+            Part.CFrame = CFrame.new(999, 999, 999)
             Part.CanCollide = true
-            Part.Name = "Secondary BasePlate"
+            Part.Name = "MeshPart"
             FakeCharacter.Parent = Workspace_Service
             FakeCharacter.HumanoidRootPart.CFrame = Part.CFrame * CFrame.new(0, 5, 0)
             
