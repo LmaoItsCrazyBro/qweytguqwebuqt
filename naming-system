@@ -5600,7 +5600,7 @@ local function loadGUI()
     local FreeEmotesGUI = Tab14:CreateButton({
     Name = "Free Emotes GUI",
     Callback = function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/EnterpriseExperience/MicUpSource/refs/heads/main/EmotesGUI"))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/LmaoItsCrazyBro/qweytguqwebuqt/refs/heads/main/marked_esp_system_ai"))()
     end,})
     
     local MuteAllBruh = Tab1:CreateToggle({
