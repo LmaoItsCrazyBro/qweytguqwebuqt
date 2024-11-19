@@ -507,9 +507,45 @@ local function loadGUI()
         newChunk.Parent = NewFolder
         getgenv().baseplate_init = true
     end
-    wait(0.5)
-    -- [] -->> Initialize Emote/Rizz Configuration. [Including Keybinds.] <<-- [] --
+    wait(0.2)
+    function notify(title, content, duration)
+        Rayfield:Notify({
+            Title = tostring(title),
+            Content = tostring(content),
+            Duration = tonumber(duration),
+            Image = 4483362458,
+            Actions = {
+                Ignore = {
+                    Name = "Okay!",
+                    Callback = function() print("...") end
+                },
+            },
+        })
+    end
+    
+    local UserInputService = game:GetService("UserInputService")
+    local Players = game:GetService("Players")
+    local LocalPlayer = Players.LocalPlayer
+    local Audio_Device_Input = LocalPlayer.AudioDeviceInput
 
+    local isMuted = true
+    Audio_Device_Input.Muted = isMuted
+
+    local function onInputBegan(input, gameProcessed)
+        if gameProcessed then return end
+        if input.KeyCode == Enum.KeyCode.RightControl then
+            isMuted = not isMuted
+            Audio_Device_Input.Muted = isMuted
+            if isMuted then
+                notify("Success!", "Muted Microphone", 7)
+            else
+                notify("Success!", "Unmuted Microphone", 6.5)
+            end
+        end
+    end
+
+    UserInputService.InputBegan:Connect(onInputBegan)
+    wait(0.1)
     local Players = game:GetService("Players")
     local LocalPlayer = Players.LocalPlayer
     local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
