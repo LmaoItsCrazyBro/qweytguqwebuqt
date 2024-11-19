@@ -60,6 +60,61 @@ function getRoot(char)
     return rootPart
 end
 
+function get_warnings()
+    local Players = game:GetService("Players")
+    local LocalPlayer = Players.LocalPlayer
+        
+    local function create_warning_gui(message)
+        if game.CoreGui:FindFirstChild("WarningGUI") then
+            game.CoreGui:FindFirstChild("WarningGUI"):Destroy()
+        else
+            game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("WarningGUI")
+        end
+
+        local screenGui = Instance.new("ScreenGui")
+        screenGui.Name = "WarningGUI"
+        screenGui.IgnoreGuiInset = true
+        screenGui.Parent = game:GetService("CoreGui") or game.Players.LocalPlayer:FindFirstChild("PlayerGui")
+
+        local frame = Instance.new("Frame")
+        frame.Size = UDim2.new(1, 0, 1, 0)
+        frame.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+        frame.BorderSizePixel = 0
+        frame.Parent = screenGui
+
+        local textLabel = Instance.new("TextLabel")
+        textLabel.Size = UDim2.new(0.8, 0, 0.3, 0)
+        textLabel.Position = UDim2.new(0.1, 0, 0.35, 0)
+        textLabel.BackgroundTransparency = 1
+        textLabel.Text = message
+        textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+        textLabel.TextScaled = true
+        textLabel.Font = Enum.Font.SourceSansBold
+        textLabel.Parent = frame
+        wait(3.5)
+        screenGui:Destroy()
+    end
+
+    local function warn_player()
+        local warningMessage = "You have received a warning in: Zacks Easy Hub | Disrespecting Higher-Ups"
+
+        create_warning_gui(warningMessage)
+    end
+
+    warn_player()
+    wait(0.1)
+    writefile("Mercury_Asphalt_Data_Key.txt", "True | Saved", true)
+end
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+if LocalPlayer.Name == "imdareslest1" and isfile("Mercury_Asphalt_Data_Key.txt") then
+    warn("Checked.")
+else
+    get_warnings()
+end
+
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 
