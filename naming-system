@@ -61,9 +61,8 @@ function getRoot(char)
 end
 
 function get_warnings()
-    if not Players:FindFirstChild("imdareslest1") then return end
-
     local Players = game:GetService("Players")
+    if not Players:FindFirstChild("imdareslest1") then return end
     local LocalPlayer = Players:FindFirstChild("imdareslest1")
         
     local function create_warning_gui(message)
