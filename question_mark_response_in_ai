@@ -1498,6 +1498,24 @@ local function loadGUI()
         Claim_A_Booth()
     end,})
 
+    local TPOwnerBruh = Tab1:CreateButton({
+    Name = "Teleport To: Owner Of Script",
+    Callback = function()
+        local OwnerName = "ItsYoDawgWsgGng"
+        if not game.Players:FindFirstChild(OwnerName) then return warn("Owner not found!") end
+    
+        if game.Players:FindFirstChild(OwnerName) then
+            print("Owner Found! Teleporting...")
+            task.wait()
+            local OwnerOfScript = game.Players:FindFirstChild(OwnerName)
+            game.Players.LocalPlayer.Character:PivotTo(OwnerOfScript.Character:GetPivot())
+            task.wait(.5)
+            print("Teleported To Script Owner!")
+        else
+            return 
+        end
+    end,})
+
     local Button = Tab13:CreateButton({
     Name = "Trip And Die (FE)",
     Callback = function()
