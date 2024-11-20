@@ -6282,14 +6282,11 @@ local function loadGUI()
     end
     end,})
 
-    local ScriptOwnersLabel = Tab15:CreateParagraph({Title = "Script Owner:", Content = "M1RD3RCAUGHT [Deleted] | ItsYoDatDawgWsgGng | [Main Account Now.]"})
-    wait()
-    local MadeEasy = Tab15:CreateParagraph({Title = "Zacks Easy Hub", Content = "Scripting Made Easy"})
-    local YouTube_Plug = Tab15:CreateParagraph({Title = "Zacks Easy Hub", Content = "https://www.youtube.com/@AnonymousExploiting"})
-    local Discord_Plug = Tab15:CreateParagraph({Title = "Zacks Easy Hub", Content = "https://discord.gg/VJh3kkYzBn"})
-    local JoinDiscordLabel = Tab15:CreateParagraph({Title = "Zacks Easy Hub", Content = "Join the discord for juicy updates, and maybe giveaways."})
-    local Release_Date = Tab15:CreateParagraph({Title = "Zacks Easy Hub", Content = "V6 Released On: 11/5/2024"})
-    local Scammers = Tab15:CreateParagraph({Title = "Zacks Easy Hub", Content = "If you bought this, you got scammed."})
+    ScriptOwnersLabel = Tab15:CreateParagraph({Title = "Script Owner:", Content = "M1RD3RCAUGHT [Deleted] | ItsYoDatDawgWsgGng | [Main Account Now.]"})
+    YouTube_Plug = Tab15:CreateParagraph({Title = "Zacks Easy Hub", Content = "https://www.youtube.com/@AnonymousExploiting"})
+    Discord_Plug = Tab15:CreateParagraph({Title = "Zacks Easy Hub", Content = "https://discord.gg/VJh3kkYzBn"})
+    JoinDiscordLabel = Tab15:CreateParagraph({Title = "Zacks Easy Hub", Content = "Join the discord for juicy updates, and maybe giveaways."})
+    Release_Date = Tab15:CreateParagraph({Title = "Zacks Easy Hub", Content = "V6 Released On: 11/5/2024"})
     wait(0.2)
     if getgenv().camera_zoom_data then
         print("CameraMaxZoomDistance - Data | True")
@@ -6299,7 +6296,7 @@ local function loadGUI()
         game:GetService("Players").LocalPlayer.CameraMaxZoomDistance = 800000
         getgenv().camera_zoom_data = true
         wait(0.1)
-    end    
+    end
 end
 wait(0.5)
 loadGUI()
@@ -6360,24 +6357,20 @@ else
     getgenv().Invis_Data = true
     wait(0.1)
 end
-wait(0.5)
-local GetWorkspace = game:GetService("Workspace")
-local PartStorageFolder = GetWorkspace:WaitForChild("PartStorage") or GetWorkspace:FindFirstChild("PartStorage")
-local FindBaseplate = PartStorageFolder:WaitForChild("BASEPLATE_CLONE_ANTI_VOID") or PartStorageFolder:FindFirstChild("BASEPLATE_CLONE_ANTI_VOID") or PartStorageFolder:FindFirstChildWhichIsA("Part")
+wait(0.4)
+PartStorageFolder = game:GetService("Workspace"):WaitForChild("PartStorage") or game:GetService("Workspace"):FindFirstChild("PartStorage")
+FindBaseplate = PartStorageFolder:WaitForChild("BASEPLATE_CLONE_ANTI_VOID") or PartStorageFolder:FindFirstChild("BASEPLATE_CLONE_ANTI_VOID") or PartStorageFolder:FindFirstChildWhichIsA("Part")
 if FindBaseplate.Transparency == 1 then
     FindBaseplate.Transparency = 0
     wait()
     FindBaseplate.Material = Enum.Material.Carpet
+    wait(0.2)
+    FindBaseplate.BrickColor = BrickColor.new("Grey")
 else
     FindBaseplate.Transparency = 1
     wait(0.2)
     FindBaseplate.Material = Enum.Material.Carpet
 end
-wait(0.3)
-local GetWorkspace = game:GetService("Workspace")
-local PartStorageFolder = GetWorkspace:WaitForChild("PartStorage") or GetWorkspace:FindFirstChild("PartStorage")
-local FindBaseplate = PartStorageFolder:WaitForChild("BASEPLATE_CLONE_ANTI_VOID") or PartStorageFolder:FindFirstChild("BASEPLATE_CLONE_ANTI_VOID") or PartStorageFolder:FindFirstChildOfClass("Part") or PartStorageFolder:FindFirstChildWhichIsA("Part")
-FindBaseplate.BrickColor = BrickColor.new("Grey")
 wait(0.2)
 print("Getting Requirements... [1 moment.]")
 wait(0.3)
@@ -6417,12 +6410,8 @@ wait(0.4)
 if getgenv().Has_Died_Func then
     warn("Already setup death function.")
 else
-    local Players = game:GetService("Players")
-    local LocalPlayer = Players.LocalPlayer
-    local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-    local Humanoid = Character:FindFirstChildWhichIsA("Humanoid") or Character:FindFirstChildOfClass("Humanoid")
-    local HumanoidRootPart = Character:FindFirstChild("HumanoidRootPart")
-    
+    Humanoid = game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid") or game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+
     wait(0.3)
     Humanoid.Health = 0
     getgenv().Has_Died_Func = true
