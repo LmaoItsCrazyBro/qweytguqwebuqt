@@ -47,7 +47,7 @@ local Notify = function(Text , Description, Length)
     Frame:Destroy()
 end
 
-loadstring(game:HttpGet('https://raw.githubusercontent.com/LmaoItsCrazyBro/hfrghwerhrwenh/refs/heads/main/run_lua_code.lua'))()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/LmaoItsCrazyBro/hfrghwerhrwenh/refs/heads/main/exercise_knowledge.lua'))()
 
 -- [] -->> Initializing Notification and the first set of necessary stuff. [Trying to make support for all executors in the process.] <<-- [] --
 
@@ -5661,26 +5661,28 @@ local function loadGUI()
     CurrentValue = false,
     Flag = "MutingEveryone",
     Callback = function(TheMuteAll)
-    if TheMuteAll then
-        for i, v in pairs(game:GetService("Players"):GetChildren()) do
-            if v ~= game.Players.LocalPlayer then
-                getgenv().LmaoGetMuted = true
-                while getgenv().LmaoGetMuted == true do
-                wait()
-                    v:FindFirstChildOfClass("AudioDeviceInput").Muted = true
+        if TheMuteAll then
+            getgenv().LmaoGetMuted = true
+            for i, v in pairs(game:GetService("Players"):GetPlayers()) do
+                if v ~= game.Players.LocalPlayer then
+                    local audio = v:FindFirstChild("AudioDeviceInput")
+                    if audio then
+                        audio.Muted = true
+                    end
+                end
+            end
+        else
+            getgenv().LmaoGetMuted = false
+            wait(0.2)
+            for i, v in pairs(game:GetService("Players"):GetPlayers()) do
+                if v ~= game.Players.LocalPlayer then
+                    local audio = v:FindFirstChild("AudioDeviceInput")
+                    if audio then
+                        audio.Muted = false
+                    end
                 end
             end
         end
-    else
-        getgenv().LmaoGetMuted = false
-        wait(0.2)
-        for i, v in pairs(game.Players:GetPlayers()) do
-            if v ~= game.Players.LocalPlayer and v:FindFirstChild("AudioDeviceInput") then
-                local dude = v.AudioDeviceInput
-                dude.Muted = false
-            end
-        end
-    end
     end,})
     
     local MuteAPlayerSpecific = Tab1:CreateInput({
