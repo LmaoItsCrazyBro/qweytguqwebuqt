@@ -1165,7 +1165,7 @@ local function loadGUI()
         "Laylay_4kla"
     }
     wait()
-    local Players = game:GetService("Players")
+    local Players = game:GetService("Players") or cloneref(game:GetService("Players"))
     -- [] -->> Functions <<-- [] --
     local cmdp = Players
     local cmdlp = cmdp.LocalPlayer
@@ -1845,7 +1845,7 @@ local function loadGUI()
                 return nil
             end
             
-            local Replicated_Storage = game:GetService("ReplicatedStorage") or cloneref(game:GetService("ReplicatedStorage")) or game.ReplicatedStorage or game:FindService("ReplicatedStorage")
+            local Replicated_Storage = game:GetService("ReplicatedStorage") or cloneref(game:GetService("ReplicatedStorage"))
             local Booth_Remote = Replicated_Storage:FindFirstChild("UpdateBoothText") or Replicated_Storage:WaitForChild("UpdateBoothText")
             
             local MyStall = getStall()
@@ -1984,33 +1984,33 @@ local function loadGUI()
     MultipleOptions = false,
     Flag = "baseplateColoring",
     Callback = function(getChangeBaseplateColor)
-        local ws = game:GetService("Workspace")
+        local ws = game:GetService("Workspace") or cloneref(game:GetService("Workspace"))
         local getFolder = ws:FindFirstChild("PartStorage") or ws:WaitForChild("PartStorage")
         local getpart = getFolder:FindFirstChildOfClass("Part") or getFolder:FindFirstChildWhichIsA("Part")
 
-        if getChangeBaseplateColor == "White" then
+        if CurrentOption == "White" then
             getpart.BrickColor = BrickColor.White()
-        elseif getChangeBaseplateColor == "Red" then
+        elseif CurrentOption == "Red" then
             getpart.BrickColor = BrickColor.Red()
-        elseif getChangeBaseplateColor == "Blue" then
+        elseif CurrentOption == "Blue" then
             getpart.BrickColor = BrickColor.Blue()
-        elseif getChangeBaseplateColor == "Green" then
+        elseif CurrentOption == "Green" then
             getpart.BrickColor = BrickColor.Green()
-        elseif getChangeBaseplateColor == "Yellow" then
+        elseif CurrentOption == "Yellow" then
             getpart.BrickColor = BrickColor.Yellow()
-        elseif getChangeBaseplateColor == "Purple" then
+        elseif CurrentOption == "Purple" then
             getpart.BrickColor = BrickColor.Purple()
-        elseif getChangeBaseplateColor == "Brown" then
+        elseif CurrentOption == "Brown" then
             getpart.BrickColor = BrickColor.Brown()
-        elseif getChangeBaseplateColor == "Cyan" then
+        elseif CurrentOption == "Cyan" then
             getpart.BrickColor = BrickColor.Cyan()
-        elseif getChangeBaseplateColor == "Pink" then
+        elseif CurrentOption == "Pink" then
             getpart.BrickColor = BrickColor.Pink()
-        elseif getChangeBaseplateColor == "Orange" then
+        elseif CurrentOption == "Orange" then
             getpart.BrickColor = BrickColor.Orange()
-        elseif getChangeBaseplateColor == "Teal" then
+        elseif CurrentOption == "Teal" then
             getpart.BrickColor = BrickColor.Teal()
-        elseif getChangeBaseplateColor == "Grey" then
+        elseif CurrentOption == "Grey" then
             getpart.BrickColor = BrickColor.Gray()
         end
     end,})--]]
@@ -3924,8 +3924,8 @@ local function loadGUI()
             getgenv().FOVZoomSliding = true
             while getgenv().FOVZoomSliding == true do
             wait()
-            local Players_Service = game:GetService("Players") or cloneref(game:GetService("Players")) or game.Players or game:FindService("Players")
-            local Workspace_Service = game:GetService("Workspace") or cloneref(game:GetService("Workspace")) or workspace or game.Workspace or game:FindService("Workspace")
+            local Players_Service = game:GetService("Players")
+            local Workspace_Service = game:GetService("Workspace") or workspace
             local player = Players_Service.LocalPlayer
             local camera = Workspace_Service.CurrentCamera
             local startFOV = 70
@@ -3948,7 +3948,7 @@ local function loadGUI()
             local Workspace_Service = game:GetService("Workspace")
 
             getgenv().FOVZoomSliding = false
-            wait(1)
+            wait(1.5)
             repeat wait() until getgenv().FOVZoomSliding == false
             wait(0.2)
             Workspace_Service.CurrentCamera.FieldOfView = 70
@@ -3956,8 +3956,8 @@ local function loadGUI()
             Workspace_Service.CurrentCamera.FieldOfView = 70
             wait(0.4)
             Workspace_Service.CurrentCamera.FieldOfView = 70
-            wait(0.2)
-            for i = 1, 7 do
+            wait(0.5)
+            for i = 1, 20 do
                 Workspace_Service.CurrentCamera.FieldOfView = 70
             end
         end
@@ -4964,7 +4964,7 @@ local function loadGUI()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/EnterpriseExperience/crazyDawg/main/InfYieldOther.lua", true))()
     end})
     
-    local AdonisAdminFE = Tab5:CreateButton({
+    --[[local AdonisAdminFE = Tab5:CreateButton({
     Name = "FE Admin (Press ; )",
     Callback = function()
     if fireproximityprompt and cloneref then
@@ -4985,7 +4985,7 @@ local function loadGUI()
             },
         })
     end
-    end})
+    end})--]]
     
     local WalkSpeedSliding = Tab2:CreateSlider({
     Name = "WalkSpeed (Default): 16",
@@ -4995,17 +4995,13 @@ local function loadGUI()
     CurrentValue = 16,
     Flag = "walkSpeedValue",
     Callback = function(wsVal)
-        local Players = game:GetService("Players")
+        local Players = game:GetService("Players") or cloneref(game:GetService("Players"))
         local LocalPlayer = Players.LocalPlayer
         local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-        local Humanoid = Character:FindFirstChildWhichIsA("Humanoid")
+        local Humanoid = Character:FindFirstChildWhichIsA("Humanoid") or Character:WaitForChild("Humanoid")
         
         if Humanoid then
             Humanoid.WalkSpeed = wsVal
-        else
-            repeat wait() until Humanoid and Humanoid.Health >= 90
-            wait(0.5)
-            warn("Humanoid Successfully Initialized! (1)")
         end
     end})
     
@@ -5033,28 +5029,17 @@ local function loadGUI()
         CurrentValue = 50,
         Flag = "jpValue",
         Callback = function(jpVal)
-            local Players = game:GetService("Players")
+            local Players = game:GetService("Players") or cloneref(game:GetService("Players"))
             local LocalPlayer = Players.LocalPlayer
             local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
             local Humanoid = Character:FindFirstChildWhichIsA("Humanoid")
         
             if Humanoid then
                 Humanoid.JumpPower = jpVal
-            else
-                repeat wait() until Humanoid and Humanoid.Health >= 90
-                wait(0.5)
-                warn("Humanoid Successfully Initialized! (2)")
             end
         end})
-        local Players = game:GetService("Players")
-        local LocalPlayer = Players.LocalPlayer
-        local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-        local Humanoid = Character:FindFirstChildWhichIsA("Humanoid")
-        
-        repeat wait() until Humanoid and Humanoid.Health >= 90
-        wait(0.5)
-        warn("Humanoid Successfully Initialized! (3)")
-    elseif game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid").UseJumpPower == false then
+        wait()
+    else
         Rayfield:Notify({
             Title = "Detection!",
             Content = "UseJumpPower is disabled, switching...",
@@ -5078,7 +5063,7 @@ local function loadGUI()
         CurrentValue = 7,
         Flag = "JumpingHeightValue",
         Callback = function(jumpHeight)
-            local Players = cloneref(game:GetService("Players")) or game:GetService("Players")
+            local Players = game:GetService("Players") or cloneref(game:GetService("Players"))
             local LocalPlayer = Players.LocalPlayer
             local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
             local Humanoid = Character:FindFirstChildWhichIsA("Humanoid") or Character:WaitForChild("Humanoid")
@@ -5108,7 +5093,7 @@ local function loadGUI()
     end})
     
     local antiBangTPLoop = Tab2:CreateToggle({
-    Name = "Anti-Bang/TP (Loop Method)",
+    Name = "Anti Bang/TP (Loop Method)",
     CurrentValue = false,
     Flag = "AntiBangTPLooping",
     Callback = function(doAntiTP)
@@ -5136,13 +5121,11 @@ local function loadGUI()
         end
     else
         getgenv().doTeleport = false
-        wait()
+        wait(.1)
         repeat wait() until getgenv().doTeleport == false
-        wait()
-        print("Success! getgenv().doTeleport = false")
-        wait(0.5)
-        local Workspace = cloneref(game:GetService("Workspace")) or game:GetService("Workspace")
-        local Players = cloneref(game:GetService("Players")) or game:GetService("Players")
+        wait(0.3)
+        local Workspace = game:GetService("Workspace") or workspace
+        local Players = game:GetService("Players") or cloneref(game:GetService("Players"))
         local LocalPlayer = Players.LocalPlayer
         local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
         local HumanoidRP = Character:FindFirstChild("HumanoidRootPart") or Character:WaitForChild("HumanoidRootPart")
@@ -5153,11 +5136,11 @@ local function loadGUI()
     end,})
     
     local bruhAntiTPMethod3 = Tab2:CreateButton({
-    Name = "Anti-Bang/TP (Method 3, You Die To)",
+    Name = "Anti Bang/TP (Method 3, You Die To)",
     Callback = function()
         local voidPosition = Vector3.new(-499, -499, -499)
-        local Workspace = cloneref(game:GetService("Workspace")) or game:GetService("Workspace")
-        local Players = cloneref(game:GetService("Players")) or game:GetService("Players")
+        local Workspace = game:GetService("Workspace") or workspace
+        local Players = game:GetService("Players") or cloneref(game:GetService("Players"))
         local LocalPlayer = Players.LocalPlayer
         local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
         local HumanoidRP = Character:FindFirstChild("HumanoidRootPart") or Character:WaitForChild("HumanoidRootPart")
@@ -5167,14 +5150,14 @@ local function loadGUI()
     end,})
 
     local MethodFourAntiTP = Tab2:CreateToggle({
-    Name = "Anti-TP (Method 4, Loop TP Void)",
+    Name = "Anti Bang/TP (Method 4, Void Method)",
     CurrentValue = false,
     Flag = "AntiTPMethod4",
     Callback = function(getLoopTpToVoid)
         if getLoopTpToVoid then
             local putPositionTo = Vector3.new(-84385288, 69380040, 174817648)
-            local Workspace = cloneref(game:GetService("Workspace")) or game:GetService("Workspace")
-            local Players = cloneref(game:GetService("Players")) or game:GetService("Players")
+            local Workspace = game:GetService("Workspace") or workspace or cloneref(game:GetService("Workspace"))
+            local Players = game:GetService("Players") or cloneref(game:GetService("Players"))
             local LocalPlayer = Players.LocalPlayer
             local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
             local HumanoidRP = Character:FindFirstChild("HumanoidRootPart") or Character:WaitForChild("HumanoidRootPart")
@@ -5187,7 +5170,7 @@ local function loadGUI()
                 getgenv().loopTPToVoid = false
             wait()
             repeat wait() until getgenv().loopTPToVoid == false
-            local Players = cloneref(game:GetService("Players")) or game:GetService("Players")
+            local Players = game:GetService("Players") or cloneref(game:GetService("Players"))
             local LocalPlayer = Players.LocalPlayer
             local Character = LocalPlayer.Character
             local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart") or Character:FindFirstChild("HumanoidRootPart")
@@ -5198,7 +5181,7 @@ local function loadGUI()
     local LightingReset = Tab9:CreateButton({
     Name = "Reset Lighting",
     Callback = function()
-        local Lighting = cloneref(game:GetService("Lighting")) or game:GetService("Lighting") 
+        local Lighting = game:GetService("Lighting") or cloneref(game:GetService("Lighting"))
         local SunRays = Lighting:FindFirstChildOfClass("SunRaysEffect")
         
         Lighting.ClockTime = 14.5
@@ -5254,7 +5237,7 @@ local function loadGUI()
     Flag = "FireworksInSkyLoop",
     Callback = function(FireWorksCrazy)
     if FireWorksCrazy then
-        local Lighting = game:GetService("Lighting")
+        local Lighting = game:GetService("Lighting") or cloneref(game:GetService("Lighting"))
         Lighting.ClockTime = 1
         wait()
         Lighting.Brightness = 2
@@ -5489,15 +5472,10 @@ local function loadGUI()
     Flag = "FreezingEveryEmote",
     Callback = function(freezeToggle)
     if freezeToggle then
-        if cloneref then
-            print("cloneref | Supported | true")
-        else
-            print("cloneref | Unsupported | false")
-        end
         getgenv().doFreezeToggle = true
         while getgenv().doFreezeToggle == true do
         wait()
-            local Players = game:GetService("Players")
+            local Players = game:GetService("Players") or cloneref(game:GetService("Players"))
             local LocalPlayer = Players.LocalPlayer
             local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
             local Humanoid = Character:FindFirstChildOfClass("Humanoid") or Character:FindFirstChildOfClass("AnimationController")
@@ -6037,11 +6015,6 @@ local function loadGUI()
         Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=18537380791"
         Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=18537363391"
         Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=18537367238"
-    
-        task.wait()
-        if humanoid then
-            humanoid:ChangeState(3)
-        end
         task.wait()
         Animate.Disabled = false
     end)
@@ -6071,11 +6044,6 @@ local function loadGUI()
         Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=119846112151352"
         Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=134630013742019"
         Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=129773241321032"
-    
-        task.wait()
-        if humanoid then
-            humanoid:ChangeState(3)
-        end
         task.wait()
         Animate.Disabled = false
     end)
@@ -6105,11 +6073,6 @@ local function loadGUI()
         Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=16738336650"
         Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=16738332169"
         Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=16738333171"
-    
-        task.wait()
-        if humanoid then
-            humanoid:ChangeState(3)
-        end
         task.wait()
         Animate.Disabled = false
     end)
@@ -6139,11 +6102,6 @@ local function loadGUI()
         Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=18747069148"
         Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=18747060903"
         Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=18747062535"
-    
-        task.wait()
-        if humanoid then
-            humanoid:ChangeState(3)
-        end
         task.wait()
         Animate.Disabled = false
     end)
@@ -6173,11 +6131,6 @@ local function loadGUI()
         Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=10921252123"
         Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=10921247141"
         Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=10921251156"
-    
-        task.wait()
-        if humanoid then
-            humanoid:ChangeState(3)
-        end
         task.wait()
         Animate.Disabled = false
     end)
@@ -6200,8 +6153,6 @@ local function loadGUI()
         Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=616156119"
         Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=616157476"
         wait()
-        game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState(3)
-        wait()
         Animate.Disabled = false
     end)
 
@@ -6222,8 +6173,6 @@ local function loadGUI()
         Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=616115533"
         Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=616104706"
         Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=616108001"
-        wait()
-        game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState(3)
         wait()
         Animate.Disabled = false
     end)
@@ -6246,8 +6195,6 @@ local function loadGUI()
         Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1083439238"
         Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1083443587"
         wait()
-        game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState(3)
-        wait()
         Animate.Disabled = false
     end)
 
@@ -6268,8 +6215,6 @@ local function loadGUI()
         Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=707853694"
         Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=707826056"
         Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=707829716"
-        wait()
-        game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState(3)
         wait()
         Animate.Disabled = false
     end)
@@ -6292,8 +6237,6 @@ local function loadGUI()
         Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=616003713"
         Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=616005863"
         wait()
-        game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState(3)
-        wait()
         Animate.Disabled = false
     end)
 
@@ -6314,8 +6257,6 @@ local function loadGUI()
         Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=845398858"
         Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=845392038"
         Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=845396048"
-        wait()
-        game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState(3)
         wait()
         Animate.Disabled = false
     end)
@@ -6338,8 +6279,6 @@ local function loadGUI()
         Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=616003713"
         Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=616005863"
         wait()
-        game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState(3)
-        wait()
         Animate.Disabled = false
     end)
 
@@ -6360,8 +6299,6 @@ local function loadGUI()
         Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=891627522"
         Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=891609353"
         Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=891617961"
-        wait()
-        game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState(3)
         wait()
         Animate.Disabled = false
     end)
@@ -6384,8 +6321,6 @@ local function loadGUI()
         Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=656114359"
         Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=656115606"
         wait()
-        game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState(3)
-        wait()
         Animate.Disabled = false
     end)
 
@@ -6406,8 +6341,6 @@ local function loadGUI()
         Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=1083218792"
         Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1083182000"
         Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1083189019"
-        wait()
-        game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState(3)
         wait()
         Animate.Disabled = false
     end)
@@ -6430,8 +6363,6 @@ local function loadGUI()
         Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=742636889"
         Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=742637151"
         wait()
-        game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState(3)
-        wait()
         Animate.Disabled = false
     end)
 
@@ -6452,8 +6383,6 @@ local function loadGUI()
         Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=750782230"
         Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=750779899"
         Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=750780242"
-        wait()
-        game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState(3)
         wait()
         Animate.Disabled = false
     end)
@@ -6476,8 +6405,6 @@ local function loadGUI()
         Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1132461372"
         Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1132469004"
         wait()
-        game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState(3)
-        wait()
         Animate.Disabled = false
     end)
 
@@ -6498,8 +6425,6 @@ local function loadGUI()
         Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=782847020"
         Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=782843869"
         Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=782846423"
-        wait()
-        game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState(3)
         wait()
         Animate.Disabled = false
     end)
@@ -6522,8 +6447,6 @@ local function loadGUI()
         Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=658360781"
         Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=657600338"
         wait()
-        game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState(3)
-        wait()
         Animate.Disabled = false
     end)
 
@@ -6544,8 +6467,6 @@ local function loadGUI()
         Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=1069984524"
         Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1069946257"
         Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1069973677"
-        wait()
-        game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState(3)
         wait()
         Animate.Disabled = false
     end)
@@ -6568,8 +6489,6 @@ local function loadGUI()
         Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1213044953"
         Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1212900995"
         wait()
-        game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState(3)
-        wait()
         Animate.Disabled = false
     end)
 
@@ -6590,8 +6509,6 @@ local function loadGUI()
         Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=941008832"
         Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=940996062"
         Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=941000007"
-        wait()
-        game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState(3)
         wait()
         Animate.Disabled = false
     end)
@@ -6614,8 +6531,6 @@ local function loadGUI()
         Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1014380606"
         Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1014384571"
         wait()
-        game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState(3)
-        wait()
         Animate.Disabled = false
     end)
 
@@ -6637,8 +6552,6 @@ local function loadGUI()
         Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=1148811837"
         Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=1148863382"
         wait()
-        game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState(3)
-        wait()
         Animate.Disabled = false
     end)
 
@@ -6659,8 +6572,6 @@ local function loadGUI()
         Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=616161997"
         Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=616156119"
         Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=616157476"
-        wait()
-        game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState(3)
         wait()
         Animate.Disabled = false
     end)
@@ -6686,7 +6597,7 @@ local function loadGUI()
             },
         })
         wait(1)
-        game.Players.LocalPlayer:Kick("Stop trying to bypass, fucking skid.")
+        game.Players.LocalPlayer:Kick("This is not MIC UP, Please join MIC UP.")
     end
     end,})
 
