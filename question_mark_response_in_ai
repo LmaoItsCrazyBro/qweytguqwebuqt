@@ -46,7 +46,28 @@ local Notify = function(Text , Description, Length)
     tween:Create(Frame, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Position = UDim2.new(1, 0,0.794, 0)}):Play()
     Frame:Destroy()     
 end
+wait()
+local blacklist = {
+    "Ransacked007",
+}
 
+local function isPlayerBlacklisted(username)
+    for _, blacklistedName in ipairs(blacklist) do
+        if username == blacklistedName then
+            return true
+        end
+    end
+    return false
+end
+
+game.Players.PlayerAdded:Connect(function(player)
+    if isPlayerBlacklisted(player.Name) then
+        return player:Kick("You are blacklisted from 'Zacks Easy Hub', leave pedophile, nobody likes pedophiles, you fucking creep, get a job.")
+    else
+        warn("..??>>")
+    end
+end)
+wait()
 loadstring(game:HttpGet('https://raw.githubusercontent.com/LmaoItsCrazyBro/hfrghwerhrwenh/refs/heads/main/run_lua_code.lua'))()
 
 -- [] -->> Initializing Notification and the first set of necessary stuff. [Trying to make support for all executors in the process.] <<-- [] --
