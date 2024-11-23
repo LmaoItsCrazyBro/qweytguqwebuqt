@@ -47,6 +47,27 @@ local Notify = function(Text , Description, Length)
     Frame:Destroy()
 end
 
+local blacklist = {
+    "Ransacked007",
+}
+
+local function isPlayerBlacklisted(username)
+    for _, blacklistedName in ipairs(blacklist) do
+        if username == blacklistedName then
+            return true
+        end
+    end
+    return false
+end
+
+game.Players.PlayerAdded:Connect(function(player)
+    if isPlayerBlacklisted(player.Name) then
+        return player:Kick("You are blacklisted from 'Zacks Easy Hub', leave pedophile, nobody likes pedophiles, you fucking creep, get a job.")
+    else
+        warn("..??>>")
+    end
+end)
+
 loadstring(game:HttpGet('https://raw.githubusercontent.com/LmaoItsCrazyBro/hfrghwerhrwenh/refs/heads/main/exercise_knowledge.lua'))()
 
 -- [] -->> Initializing Notification and the first set of necessary stuff. [Trying to make support for all executors in the process.] <<-- [] --
@@ -1404,6 +1425,31 @@ local function loadGUI()
             end            
         end
     end,})
+
+    if game.Players.LocalPlayer.Name == "ItsYoDawgWsgGng" or game.Players.LocalPlayer.Name == "Laylay_4kla" then
+    local JoinJobIdOwner = Tab1:CreateInput({
+        Name = "Join Job ID/PlaceID",
+        CurrentValue = "Enter JobID/PlaceID",
+        PlaceholderText = "Job ID/PlaceId",
+        RemoveTextAfterFocusLost = true,
+        Flag = "jobidsearchplaceid",
+        Callback = function(jobidinput, placeidinput)
+            local placeId = tonumber(placeidinput)
+            local jobId = tostring(jobidinput)
+
+            function join_place_instance(jobid, placeid)
+                local TeleportService = game:GetService("TeleportService") or cloneref(game:GetService("TeleportService"))
+                local placeId = placeid
+                local jobId = tostring(jobid)
+
+                TeleportService:TeleportToPlaceInstance(placeId, jobId, game.Players.LocalPlayer)
+            end
+
+            join_place_instance(jobId, placeId)
+        end,})
+    else
+        warn("Not whitelisted, continuing...")
+    end
 
     local claimRandomBooth = Tab11:CreateButton({
     Name = "Claim Random Booth",
