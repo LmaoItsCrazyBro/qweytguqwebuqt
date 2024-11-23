@@ -286,19 +286,8 @@ local LocalPlayer = Players.LocalPlayer
 if IsStudio then
 	ScreenGui.Parent = LocalPlayer.PlayerGui
 else
-	--thanks inf yield
-	local SynV3 = syn and DrawingImmediate
-	if (not is_sirhurt_closure) and (not SynV3) and (syn and syn.protect_gui) then
-		syn.protect_gui(ScreenGui)
-		ScreenGui.Parent = CoreGui
-	elseif get_hidden_gui or gethui then
-		local hiddenUI = get_hidden_gui or gethui
-		ScreenGui.Parent = hiddenUI()
-	else
-		ScreenGui.Parent = CoreGui
-	end
+	ScreenGui.Parent = CoreGui
 end
-
 
 local function SendNotification(title, text)
 	if (not IsStudio) and syn and syn.toast_notification then
