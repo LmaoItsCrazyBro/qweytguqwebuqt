@@ -3689,42 +3689,37 @@ local function loadGUI()
     Flag = "LikingOnlyFriends",
     Callback = function(myFriendsLiked)
         if myFriendsLiked then
-            local Workspace_Service = game:GetService("Workspace") or workspace
-            local Avatar_UI = Workspace_Service:FindFirstChild("AvatarUI") or Workspace_Service:WaitForChild("AvatarUI")
+            local Workspace_Service = game:GetService("Workspace") or cloneref(game:GetService("Workspace"))
+            local Avatar_UI = Workspace_Service:WaitForChild("AvatarUI")
             local Like_Button = Avatar_UI:FindFirstChild("LikeButton") or Avatar_UI:WaitForChild("LikeButton")
-            local Click_Detector_Input = Like_Button:FindFirstChild("ClickDetector") or Like_Button.ClickDetector or Like_Button:FindFirstChildWhichIsA("ClickDetector") or Like_Button:WaitForChild("ClickDetector") or Like_Button:FindFirstChildOfClass("ClickDetector")
-            local Avatar_Part_UI = Avatar_UI:FindFirstChild("AvatarUI") or Avatar_UI:WaitForChild("AvatarUI") or Avatar_UI:FindFirstChildOfClass("Part") or Avatar_UI:FindFirstChildWhichIsA("Part")
-            local Image_Label = Avatar_Part_UI:FindFirstChild("SurfaceGui"):FindFirstChild("ImageLabel") or Avatar_Part_UI:WaitForChild("SurfaceGui"):WaitForChild("ImageLabel") or Avatar_Part_UI:FindFirstChildWhichIsA("SurfaceGui"):FindFirstChildOfClass("ImageLabel")
+            local Click_Detector_Input = Like_Button:FindFirstChild("ClickDetector")
+            local Avatar_Part_UI = Avatar_UI:WaitForChild("AvatarUI")
+            local Image_Label = Avatar_Part_UI:WaitForChild("SurfaceGui"):WaitForChild("ImageLabel")
+            local Players = game:GetService("Players") or cloneref(game:GetService("Players"))
+            local Local_Player = Players.LocalPlayer
             
             function Get_Friend_Func()
-                local Players = game:GetService("Players")
-                local Local_Player = Players.LocalPlayer
-
-                for i,v in pairs(Players:GetChildren()) do
-                    if v:IsFriendsWith(Local_Player.UserId) or v == game.Players.LocalPlayer then
-                        return v
+                for _, player in pairs(Players:GetPlayers()) do
+                    if player:IsFriendsWith(Local_Player.UserId) then
+                        return player
                     end
                 end
                 return nil
             end
-
+            
             local Friends = Get_Friend_Func()
-
-            if not Friends and getgenv().Like_Friends then
-                getgenv().Like_Friends = false
-                return Notify_User("Error:", "[Exited Loop]: No Friends Detected", 6)
-            end
-
+            
             if not Friends then
                 getgenv().Like_Friends = false
                 return Notify_User("Error:", "There isn't any friends in this server!", 6)
             end
-
+            
             getgenv().Like_Friends = true
             while getgenv().Like_Friends == true do
-            wait()
-                if Image_Label.Image == "rbxthumb://type=Avatar&id="..tostring(Friends.UserId).."..&w=420&h=420" then
-                    fireclickdetector(Click_Detector_Input)
+                wait()
+                local expectedURL = "rbxthumb://type=Avatar&id="..tostring(Friends.UserId).."&w=420&h=420"
+                if Image_Label.Image == expectedURL then
+                    fireclickdetector(Click_Detector_Input, 999)
                 end
             end
         else
