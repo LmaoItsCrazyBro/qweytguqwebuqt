@@ -5673,6 +5673,20 @@ local function loadGUI()
     local FreeEmotesGUI = Tab14:CreateButton({
     Name = "Free Emotes GUI",
     Callback = function()
+        local StarterGui = game:GetService("StarterGui") or cloneref(game:GetService("StarterGui"))
+
+        local function sendNotification(title, text, duration)
+            StarterGui:SetCore("SendNotification", {
+                Title = title,
+                Text = text,
+                Duration = duration,
+            })
+        end
+
+        sendNotification("Free Emotes:", "Press , [comma] to open Free Emotes GUI", 4)
+        task.wait(.1)
+        sendNotification("Open Button:", "Or use the button on the left side of your screen.", 4)
+        task.wait()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/LmaoItsCrazyBro/qweytguqwebuqt/refs/heads/main/marked_esp_system_ai"))()
     end,})
     
