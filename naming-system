@@ -565,13 +565,14 @@ local function loadGUI()
         end
         wait(0.4)
         local function create_bindings()
-            local UserInputService = game:GetService("UserInputService")
-            local Players = game:GetService("Players")
-    
+            local UserInputService = game:GetService("UserInputService") or cloneref(game:GetService("UserInputService"))
+            local Players = game:GetService("Players") or cloneref(game:GetService("Players"))
+            
             local player = Players.LocalPlayer
             local emoteSpeed = 1
             local freezeEmotes = false
-    
+            getgenv().isReversed = getgenv().isReversed or false
+            
             local keybindActions = {
                 [Enum.KeyCode.One] = 13071993910,
                 [Enum.KeyCode.Two] = 14901371589,
@@ -593,9 +594,10 @@ local function loadGUI()
                 [Enum.KeyCode.Q] = "SlowDown",
                 [Enum.KeyCode.E] = "SpeedUp",
                 [Enum.KeyCode.V] = "Freeze",
-                [Enum.KeyCode.X] = "NormalSpeed"
+                [Enum.KeyCode.X] = "NormalSpeed",
+                [Enum.KeyCode.F] = "Reverse"
             }
-    
+            
             local function adjustEmoteSpeed()
                 local humanoid = player.Character and player.Character:FindFirstChildOfClass("Humanoid")
                 if humanoid then
@@ -604,7 +606,25 @@ local function loadGUI()
                     end
                 end
             end
-    
+            
+            local function reverseEmotes()
+                local humanoid = player.Character and player.Character:FindFirstChildOfClass("Humanoid")
+                if humanoid then
+                    for _, track in ipairs(humanoid:GetPlayingAnimationTracks()) do
+                        track:AdjustSpeed(-1)
+                    end
+                end
+            end
+            
+            local function playNormalSpeed()
+                local humanoid = player.Character and player.Character:FindFirstChildOfClass("Humanoid")
+                if humanoid then
+                    for _, track in ipairs(humanoid:GetPlayingAnimationTracks()) do
+                        track:AdjustSpeed(1)
+                    end
+                end
+            end
+            
             local function playEmote(emoteId)
                 local character = player.Character or player.CharacterAdded:Wait()
                 local humanoid = character:FindFirstChildOfClass("Humanoid")
@@ -623,7 +643,7 @@ local function loadGUI()
                     warn("Humanoid not found in Character!")
                 end
             end
-    
+            
             local function handleKeybind(action)
                 if type(action) == "number" then
                     playEmote(action)
@@ -641,16 +661,23 @@ local function loadGUI()
                     emoteSpeed = 1
                     adjustEmoteSpeed()
                     freezeEmotes = false
+                elseif action == "Reverse" then
+                    if getgenv().isReversed then
+                        playNormalSpeed()
+                    else
+                        reverseEmotes()
+                    end
+                    getgenv().isReversed = not getgenv().isReversed
                 end
             end
-    
+            
             UserInputService.InputBegan:Connect(function(input, gameProcessed)
                 if gameProcessed then return end
                 local action = keybindActions[input.KeyCode]
                 if action then
                     handleKeybind(action)
                 end
-            end)
+            end)            
             wait(0.1)
             function notify(title, content, duration)
                 Rayfield:Notify({
