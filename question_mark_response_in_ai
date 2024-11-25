@@ -5712,10 +5712,10 @@ local function loadGUI()
         end
     
         wait(0.2)
-        Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=891621366"
-        Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=891633237"
-        Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=1083473930"
-        Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=1083216690"
+        Animate.idle.Animation1.AnimationId = "http://www.roblox.com/asset/?id=10921330408"
+        Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=10921333667"
+        Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=10921140719"
+        Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=10921135644"
         Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=104325245285198"
         Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=845392038"
         Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=845396048"
