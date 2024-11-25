@@ -4007,9 +4007,9 @@ local function loadGUI()
         if weirdFOV then
             getgenv().FOVZoomSliding = true
             while getgenv().FOVZoomSliding == true do
-            task.wait(.5)
-                local Players_Service = game:GetService("Players")
-                local Workspace_Service = game:GetService("Workspace") or workspace
+            wait()
+                local Players_Service = game:GetService("Players") or cloneref(game:GetService("Players")) or game.Players or game:FindService("Players")
+                local Workspace_Service = game:GetService("Workspace") or cloneref(game:GetService("Workspace")) or workspace or game.Workspace or game:FindService("Workspace")
                 local player = Players_Service.LocalPlayer
                 local camera = Workspace_Service.CurrentCamera
                 local startFOV = 70
@@ -4029,17 +4029,19 @@ local function loadGUI()
                 smoothFOV()
             end
         else
-            local Workspace_Service = game:GetService("Workspace") or workspace or cloneref(game:GetService("Workspace"))
+            local Workspace_Service = game:GetService("Workspace")
 
             getgenv().FOVZoomSliding = false
             wait(1)
+            repeat wait() until getgenv().FOVZoomSliding == false
+            wait(0.2)
             Workspace_Service.CurrentCamera.FieldOfView = 70
             wait(0.3)
             Workspace_Service.CurrentCamera.FieldOfView = 70
             wait(0.4)
             Workspace_Service.CurrentCamera.FieldOfView = 70
-            wait(1)
-            for i = 1, 30 do
+            wait(0.2)
+            for i = 1, 7 do
                 Workspace_Service.CurrentCamera.FieldOfView = 70
             end
         end
