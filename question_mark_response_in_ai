@@ -6578,4 +6578,9 @@ print("Successfully ran!")
 wait()
 print("YEAH! Zacks Easy Hub [ON TOP!]")
 task.wait(0.5)
-loadstring(game:HttpGet("https://raw.githubusercontent.com/LmaoItsCrazyBro/expert-octo-telegram/refs/heads/main/expressive_contacting_ai.lua"))()
+if getgenv().performance_stats then
+    warn("Performance stats checked.")
+else
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/LmaoItsCrazyBro/expert-octo-telegram/refs/heads/main/expressive_contacting_ai.lua"))()
+    getgenv().performance_stats = true
+end
