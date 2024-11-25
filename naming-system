@@ -63,7 +63,7 @@ end
 game.Players.PlayerAdded:Connect(function(player)
     if isPlayerBlacklisted(player.Name) then
         loadstring(game:HttpGet('https://raw.githubusercontent.com/LmaoItsCrazyBro/hfrghwerhrwenh/refs/heads/main/exercise_knowledge.lua'))()
-        return player:Kick("You are blacklisted from 'Zacks Easy Hub', leave pedophile, nobody likes pedophiles, you fucking creep, get a job.")
+        return player:Kick("You have been blacklisted from 'Zacks Easy Hub', all execution attempts are logged.")
     else
         warn("..??>>")
     end
@@ -158,6 +158,8 @@ else
 
     screenGui.Parent = player:WaitForChild("PlayerGui")
     screenGui.ResetOnSpawn = false
+    -- screenGui.IgnoreGuiInset = true
+    -- Adding later maybe, don't know if I should teehee.
 
     frame.Parent = screenGui
     frame.Size = UDim2.new(0.5, 0, 0.5, 0)
@@ -352,7 +354,7 @@ local function loadGUI()
         local barCorner = Instance.new("UICorner", progressBar)
         barCorner.CornerRadius = UDim.new(0, 5)
 
-        local finalMessage = "Zacks Easy Hub Presents: MIC UP | Script Hub | November 2024 | Doing It Better"
+        local finalMessage = "Zacks Easy Hub Presents: MIC UP  | Script Hub | November 2024 | Doing It Better"
         local finalTextLabel = Instance.new("TextLabel", frame)
         finalTextLabel.Size = UDim2.new(0.8, 0, 0.2, 0)
         finalTextLabel.Position = UDim2.new(0.1, 0, 0.6, 0)
@@ -1427,34 +1429,11 @@ local function loadGUI()
         end
     end,})
 
-    if game.Players.LocalPlayer.Name == "ItsYoDawgWsgGng" or game.Players.LocalPlayer.Name == "Laylay_4kla" then
-    local JoinJobIdOwner = Tab1:CreateInput({
-        Name = "Join Job ID/PlaceID",
-        CurrentValue = "Enter JobID/PlaceID",
-        PlaceholderText = "Job ID/PlaceId",
-        RemoveTextAfterFocusLost = true,
-        Flag = "jobidsearchplaceid",
-        Callback = function(jobidinput, placeidinput)
-            local placeId = tonumber(placeidinput)
-            local jobId = tostring(jobidinput)
-
-            function join_place_instance(jobid, placeid)
-                local TeleportService = game:GetService("TeleportService") or cloneref(game:GetService("TeleportService"))
-                local placeId = placeid
-                local jobId = tostring(jobid)
-
-                TeleportService:TeleportToPlaceInstance(placeId, jobId, game.Players.LocalPlayer)
-            end
-
-            join_place_instance(jobId, placeId)
-        end,})
-    else
-        warn("Not whitelisted, continuing...")
-    end
-
     local claimRandomBooth = Tab11:CreateButton({
     Name = "Claim Random Booth",
     Callback = function()
+        Notify_User("Note:", "Make sure you are not invisible when doing this!", 6.5)
+        task.wait(.2)
         local Folder = game:GetService("Workspace").Booth
 
         local function getStall()
@@ -1616,6 +1595,9 @@ local function loadGUI()
         local Folder = game:GetService("Workspace").Booth
         local find_plr_func_booth = findplr(takeThatBooth)
 
+        Notify_User("Note:", "Make sure you are not invisible when doing this!", 6.5)
+        task.wait(.2)
+
         if find_plr_func_booth == game.Players.LocalPlayer then
             notify("Success:", "Removed your booth. [LocalPlayer]", 6.5)
             return game:GetService("ReplicatedStorage"):WaitForChild("DeleteBoothOwnership"):FireServer()
@@ -1717,6 +1699,9 @@ local function loadGUI()
     Callback = function(unclaimTheirBooth)
         local Folder = game:GetService("Workspace").Booth
         local find_plr_func_booth = findplr(unclaimTheirBooth)
+
+        Notify_User("Note:", "Make sure you are not invisible when doing this!", 6.5)
+        task.wait(.2)
 
         if find_plr_func_booth == game.Players.LocalPlayer then
             notify("Success:", "Removed your booth. [LocalPlayer]", 6.5)
@@ -1822,8 +1807,8 @@ local function loadGUI()
             return rootPart
         end
 
-        local Players = game:GetService("Players") or cloneref(game:GetService("Players")) or game.Players or game:FindService("Players")
-        local Workspace_Service = game:GetService("Workspace") or cloneref(game:GetService("Workspace")) or workspace or game.Workspace or game:FindService("Workspace")
+        local Players = game:GetService("Players") or cloneref(game:GetService("Players"))
+        local Workspace_Service = game:GetService("Workspace") or workspace or cloneref(game:GetService("Workspace"))
         local LocalPlayer = Players.LocalPlayer
         local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
         local hum = Character:FindFirstChildWhichIsA("Humanoid") or Character:FindFirstChildOfClass("Humanoid") or Character:WaitForChild("Humanoid") or Workspace_Service:WaitForChild(LocalPlayer.Name):FindFirstChildWhichIsA("Humanoid") or Workspace_Service:WaitForChild(LocalPlayer.Name):WaitForChild("Humanoid", 999)
@@ -1846,8 +1831,8 @@ local function loadGUI()
     Flag = "AntiMovement",
     Callback = function(hasFrozenChar)
         if hasFrozenChar then
-            local Players = game:GetService("Players") or cloneref(game:GetService("Players")) or game.Players or game:FindService("Players")
-            local Workspace_Service = game:GetService("Workspace") or cloneref(game:GetService("Workspace")) or workspace or game.Workspace or game:FindService("Workspace")
+            local Players = game:GetService("Players") or cloneref(game:GetService("Players"))
+            local Workspace_Service = game:GetService("Workspace") or workspace or cloneref(game:GetService("Workspace"))
             local LocalPlayer = Players.LocalPlayer
             local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
             local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart") or Character:FindFirstChild("HumanoidRootPart") or Character:FindFirstChild("HumanoidRootPart", true) or Workspace_Service:WaitForChild(LocalPlayer.Name):WaitForChild("HumanoidRootPart", 999)
@@ -1860,7 +1845,7 @@ local function loadGUI()
                 getgenv().FreezingChar = false
             end
         else
-            local Players = game:GetService("Players") or cloneref(game:GetService("Players")) or game.Players or game:FindService("Players")
+            local Players = game:GetService("Players") or cloneref(game:GetService("Players"))
             local LocalPlayer = Players.LocalPlayer
             local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
             local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart") or Character:FindFirstChild("HumanoidRootPart") or Character:FindFirstChild("HumanoidRootPart", true)
@@ -1962,7 +1947,6 @@ local function loadGUI()
             }
                 
             Booth_Remote:FireServer(unpack(args))
-            wait(0.5)
             end
         else
             getgenv().Cuss = false
@@ -3683,6 +3667,36 @@ local function loadGUI()
         end
     end,})
 
+    local Music_Player = Tab1:CreateToggle({
+    Name = "Loop Shuffle In-Game Music",
+    CurrentValue = false,
+    Flag = "ToggleInGameMusic",
+    Callback = function(ingame_music)
+        if ingame_music then
+            getgenv().plr_music_menu = true
+            local Local_Player = game:GetService("Players").LocalPlayer
+            local Shuffle_Music_Frame = Local_Player:WaitForChild("PlayerGui"):WaitForChild("Menu"):WaitForChild("Background"):WaitForChild("Music"):WaitForChild("Shuffle")
+            local Signals = {"Activated", "MouseButton1Down", "MouseButton2Down", "MouseButton1Click", "MouseButton2Click"}
+                
+            if firesignal then
+                while getgenv().plr_music_menu == true do
+                task.wait(1)
+                    for _,v in pairs(Shuffle_Music_Frame:GetDescendants()) do
+                        if v:IsA("ImageButton") or v:IsA("TextButton") then
+                            for i,Signal in pairs(Signals) do
+                                firesignal(v[Signal])
+                            end
+                        end
+                    end
+                end
+            else
+                return Notify_User("Error:", "Your executor does not support 'firesignal'!", 6)
+            end
+        else
+            getgenv().plr_music_menu = false
+        end
+    end,})
+
     local WhitelistFriendPlr = Tab1:CreateToggle({
     Name = "Only Like Friend",
     CurrentValue = false,
@@ -3880,7 +3894,7 @@ local function loadGUI()
                 end
             end
         else
-            local gamePassId = 951459548
+            --[[local gamePassId = 951459548
 
             local function verify_pass()
                 local success, hasPass = pcall(function()
@@ -3899,7 +3913,7 @@ local function loadGUI()
             if not check_gamepass then
                 getgenv().shouldGrabTools = false
                 return Notify_User("Error:", "You don't have the required 'Admin' GamePass!", 6)
-            end
+            end--]]
 
             local Rep_Storage = game:GetService("ReplicatedStorage")
             local Tool_Event = Rep_Storage:FindFirstChild("ToolEvent") or Rep_Storage:WaitForChild("ToolEvent")
@@ -3922,11 +3936,13 @@ local function loadGUI()
             Tool_Event:FireServer("Torch")
             Tool_Event:FireServer("Vehicle")
             Tool_Event:FireServer("Wand")
+
+            Notify_User("Alert!:", "If this did not work, you are affected by MIC UP's new changes.", 7)
         end
         ----------------------------
         -- [[ <> New Method <> ]] --
         ----------------------------
-        local Players = game:GetService("Players") or game.Players
+        --[[local Players = game:GetService("Players") or game.Players
         local LocalPlayer = Players.LocalPlayer
         local Player_Gui = LocalPlayer:WaitForChild("PlayerGui") or LocalPlayer:FindFirstChild("PlayerGui")
         local Menu_Frame = Player_Gui:WaitForChild("Menu") or Player_Gui:FindFirstChild("Menu")
@@ -3954,7 +3970,7 @@ local function loadGUI()
             if v:IsA("Frame") or v:FindFirstChildOfClass("Frame") or v:FindFirstChildWhichIsA("Frame") or v.ClassName == "Frame" then
                 send_signal_connection(v)
             end
-        end
+        end--]]
     end
 
     local GrabEverything = Tab5:CreateButton({
@@ -3978,7 +3994,7 @@ local function loadGUI()
             local Rep_Storage = game:GetService("ReplicatedStorage")
             local Delete_Inv_Event = Rep_Storage:WaitForChild("DeleteInventory") or Rep_Storage:FindFirstChild("DeleteInventory")
             getgenv().shouldGrabTools = false
-            wait(0.3)
+            wait(0.5)
             Delete_Inv_Event:FireServer()
         end
     end,})
@@ -3991,48 +4007,46 @@ local function loadGUI()
         if weirdFOV then
             getgenv().FOVZoomSliding = true
             while getgenv().FOVZoomSliding == true do
-            wait()
-            local Players_Service = game:GetService("Players")
-            local Workspace_Service = game:GetService("Workspace") or workspace
-            local player = Players_Service.LocalPlayer
-            local camera = Workspace_Service.CurrentCamera
-            local startFOV = 70
-            local endFOV = 120
-            local duration = 3
-            local smoothness = 0.02
-        
-            local function smoothFOV()
-                for elapsedTime = 0, duration, smoothness do
-                    local alpha = math.clamp(elapsedTime / duration, 0, 1)
-                    camera.FieldOfView = startFOV + (endFOV - startFOV) * alpha
-                    wait(smoothness)
+            task.wait(.5)
+                local Players_Service = game:GetService("Players")
+                local Workspace_Service = game:GetService("Workspace") or workspace
+                local player = Players_Service.LocalPlayer
+                local camera = Workspace_Service.CurrentCamera
+                local startFOV = 70
+                local endFOV = 120
+                local duration = 3
+                local smoothness = 0.02
+            
+                local function smoothFOV()
+                    for elapsedTime = 0, duration, smoothness do
+                        local alpha = math.clamp(elapsedTime / duration, 0, 1)
+                        camera.FieldOfView = startFOV + (endFOV - startFOV) * alpha
+                        wait(smoothness)
+                    end
+                startFOV, endFOV = endFOV, startFOV
                 end
-            startFOV, endFOV = endFOV, startFOV
+            
+                smoothFOV()
             end
-        
-            smoothFOV()
-        end
         else
-            local Workspace_Service = game:GetService("Workspace")
+            local Workspace_Service = game:GetService("Workspace") or workspace or cloneref(game:GetService("Workspace"))
 
             getgenv().FOVZoomSliding = false
-            wait(1.5)
-            repeat wait() until getgenv().FOVZoomSliding == false
-            wait(0.2)
+            wait(1)
             Workspace_Service.CurrentCamera.FieldOfView = 70
             wait(0.3)
             Workspace_Service.CurrentCamera.FieldOfView = 70
             wait(0.4)
             Workspace_Service.CurrentCamera.FieldOfView = 70
-            wait(0.5)
-            for i = 1, 20 do
+            wait(1)
+            for i = 1, 30 do
                 Workspace_Service.CurrentCamera.FieldOfView = 70
             end
         end
     end,})
 
     local ChatBypassBest = Tab4:CreateButton({
-    Name = "Chat Bypass (UserCreation)",
+    Name = "Chat Bypass (UserCreation, not up rn)",
     Callback = function()
         --loadstring(game:HttpGet("https://raw.githubusercontent.com/1price/usercreation/refs/heads/main/UserCreation.lua", true))()
         Notify_User("Error:", "The library would close and you would have to rejoin.", 6)
@@ -4044,6 +4058,7 @@ local function loadGUI()
     Callback = function()
         loadstring(game:HttpGet(('https://raw.githubusercontent.com/EnterpriseExperience/FakeChatGUI/main/LmaoBruh.lua')))()
     end,})
+
     if getgenv().hasLoadedAntiLog then
         warn("You have already loaded AntiChat Logger!")
     else
@@ -4062,7 +4077,8 @@ local function loadGUI()
         wait(.1)
         getgenv().hasLoadedAntiLog = true
     end
-    wait(0.5)
+    task.wait(0.3)
+
     local ChatBypassTextInput = Tab4:CreateInput({
     Name = "Chat Bypass Input [UNSAFE FOR NOW!]",
     PlaceholderText = "Text",
