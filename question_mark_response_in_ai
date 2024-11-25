@@ -1322,6 +1322,9 @@ local function loadGUI()
         local Folder = game:GetService("Workspace").Booth
         local find_plr_func_booth = findplr(takeThatBooth)
 
+        Notify_User("Note:", "Make sure you are not invisible when doing this!", 6.5)
+        task.wait(.2)
+
         if find_plr_func_booth == game.Players.LocalPlayer then
             notify("Success:", "Removed your booth. [LocalPlayer]", 6.5)
             return game:GetService("ReplicatedStorage"):WaitForChild("DeleteBoothOwnership"):FireServer()
@@ -1423,6 +1426,9 @@ local function loadGUI()
     Callback = function(unclaimTheirBooth)
         local Folder = game:GetService("Workspace").Booth
         local find_plr_func_booth = findplr(unclaimTheirBooth)
+
+        notify("Note:", "Make sure you are not invisible when doing this!", 6.5)
+        task.wait(.2)
 
         if find_plr_func_booth == game.Players.LocalPlayer then
             notify("Success:", "Removed your booth. [LocalPlayer]", 6.5)
@@ -3327,6 +3333,36 @@ local function loadGUI()
             end
         else
             return Notify_User("Error:", "Your executor does not support 'firesignal'!", 6)
+        end
+    end,})
+
+    local Music_Player = Tab1:CreateToggle({
+    Name = "Loop Shuffle In-Game Music",
+    CurrentValue = false,
+    Flag = "ToggleInGameMusic",
+    Callback = function(ingame_music)
+        if ingame_music then
+            getgenv().plr_music_menu = true
+            local Local_Player = game:GetService("Players").LocalPlayer
+            local Shuffle_Music_Frame = Local_Player:WaitForChild("PlayerGui"):WaitForChild("Menu"):WaitForChild("Background"):WaitForChild("Music"):WaitForChild("Shuffle")
+            local Signals = {"Activated", "MouseButton1Down", "MouseButton2Down", "MouseButton1Click", "MouseButton2Click"}
+            
+            if firesignal then
+                while getgenv().plr_music_menu == true do
+                task.wait(1)
+                    for _,v in pairs(Shuffle_Music_Frame:GetDescendants()) do
+                        if v:IsA("ImageButton") or v:IsA("TextButton") then
+                            for i,Signal in pairs(Signals) do
+                                firesignal(v[Signal])
+                            end
+                        end
+                    end
+                end
+            else
+                return Notify_User("Error:", "Your executor does not support 'firesignal'!", 6)
+            end
+        else
+            getgenv().plr_music_menu = false
         end
     end,})
 
