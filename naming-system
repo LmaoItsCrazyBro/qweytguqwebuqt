@@ -3579,7 +3579,7 @@ local function loadGUI()
             local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
 
             getgenv().viewing_booth = false
-            wait(0.5)
+            wait(0.2)
             Workspace.CurrentCamera.CameraSubject = Character
         end
     end,})
