@@ -279,7 +279,85 @@ end
 pcall(function() getgenv().SCRIPT_EXECUTED = true end)
 wait(0.3)
 -- [] -->> [First real setup part, parenting 'Teleport' to AssetService, (To prevent the game from teleporting you when you fall into it.)] <<-- [] --
-local function create_setup()
+local function loadGUI()
+    wait(0.2)
+    local currentTime = os.time()
+    local formattedTime = os.date("%I:%M %p", currentTime)
+    local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/EnterpriseExperience/MicUpSource/refs/heads/main/GetUILibrary'))()
+    -- [] -->> Comment out unnecessary functions, code, etc <<-- [] --
+
+    --[[getgenv().gethui = function()
+        return game:GetService("CoreGui")
+    end--]]
+
+    -- [] -->> Initialize Library (Rayfield, BRAND NEW!) <<-- [] --
+    local Window = Rayfield:CreateWindow({
+        Name = "Zacks Easy Hub | V6.3.0-B | Executed At: "..formattedTime,
+        LoadingTitle = "V6, WE ARE UP!!!",
+        LoadingSubtitle = "Zacks Easy Hub | Productions.",
+        ConfigurationSaving = {
+           Enabled = false,
+           FolderName = nil,
+           FileName = "Zacks Easy Hub"
+        },
+        -- [] -->> Discord invite feature is neat. <<-- [] --
+        Discord = {
+           Enabled = true,
+           Invite = "VJh3kkYzBn",
+           RememberJoins = true
+        },
+        KeySystem = false,
+        KeySettings = {
+           Title = "False | No Key System",
+           Subtitle = "No Key System",
+           Note = "No method of obtaining the key is provided",
+           FileName = "Key",
+           SaveKey = true,
+           GrabKeyFromSite = false,
+           Key = {"None"}
+        }
+    })
+    
+    -- [] -->> Initialize Tabs and Sections <<-- [] --
+    local Tab1 = Window:CreateTab("> Home Tab <", 7733960981)
+    local Section1 = Tab1:CreateSection("||| Home Section |||")
+
+    local Tab11 = Window:CreateTab("> Booths Tab <", 7733914390)
+    local Section11 = Tab11:CreateSection("||| Booths Section |||")
+
+    local Tab2 = Window:CreateTab("> Character [1] <", 7743871002)
+    local Section2 = Tab2:CreateSection("||| Character [1] Section |||")
+
+    local Tab13 = Window:CreateTab("> Character [2] <", 7743871002)
+    local Section13 = Tab13:CreateSection("||| Character [2] Section |||")
+
+    local Tab10 = Window:CreateTab("> Teleports Tab <", 7733764327)
+    local Section10 = Tab10:CreateSection("||| Teleports Section |||")
+
+    local Tab4 = Window:CreateTab("> Chatting Tab <", 7734021300)
+    local Section4 = Tab4:CreateSection("||| Chatting Section |||")
+
+    local Tab5 = Window:CreateTab("> Extras Tab <", 7733954760)
+    local Section5 = Tab5:CreateSection("||| Extras Section |||")
+
+    local Tab17 = Window:CreateTab("> Anims Tab <", 7733954760)
+    local Section17 = Tab17:CreateSection("||| Animation Packages Section |||")
+
+    local Tab9 = Window:CreateTab("> Lighting Tab <", 7734068495)
+    local Section9 = Tab9:CreateSection("||| Lighting Section |||")
+    
+    local Tab16 = Window:CreateTab("> Baseplate Tab <", 7734058260)
+    local Section16 = Tab16:CreateSection("||| Baseplate Section |||")
+    
+    local Tab12 = Window:CreateTab("> Emoting Tab <", 7743871002)
+    local Section12 = Tab12:CreateSection("||| Emoting Section |||")
+    
+    local Tab14 = Window:CreateTab("> CopyAnim Tab <", 7743871002)
+    local Section14 = Tab14:CreateSection("||| Copy Animation Section |||")
+    
+    local Tab15 = Window:CreateTab("> UI Tab <", 7734022107)
+    local Section15 = Tab15:CreateSection("||| UI Control Section |||")
+    wait(0.3)
     local Workspace = game:GetService("Workspace") or workspace
     local GameFolder = Workspace:FindFirstChild("Game")
     local GetTeleportPart = GameFolder and GameFolder:FindFirstChild("Teleport")
@@ -313,7 +391,6 @@ local function create_setup()
     local ReplicatedStorage = game:GetService("ReplicatedStorage")
     repeat wait() until player and Character and Character:FindFirstChild("HumanoidRootPart") and Character:FindFirstChildWhichIsA("Humanoid") or player.Character:FindFirstChild("Humanoid") or player.Character:FindFirstChildWhichIsA("Humanoid").Health >= 98
 
-    local function loadGUI()
         if getgenv().loading_screen_data then
             print("Already Seen Loading Screen")
         else
@@ -413,10 +490,9 @@ local function create_setup()
                     StarterGui:SetCore("TopbarEnabled", true)
                     gui:Destroy()
                 end)
-            end)
-            wait()
-            getgenv().loading_screen_data = true
-        end
+        end)
+        wait()
+        getgenv().loading_screen_data = true
         wait(4.5)
         -- [] -->> Initialization <<-- [] --
         repeat wait() until game:IsLoaded() and game.Players and game.Players.LocalPlayer and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
@@ -1092,83 +1168,6 @@ local function create_setup()
         wait()
         warn("LIGHTING FINISHED.")
     end
-    wait(0.2)
-    local currentTime = os.time()
-    local formattedTime = os.date("%I:%M %p", currentTime)
-    local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/EnterpriseExperience/MicUpSource/refs/heads/main/GetUILibrary'))()
-    -- [] -->> Comment out unnecessary functions, code, etc <<-- [] --
-
-    --[[getgenv().gethui = function()
-        return game:GetService("CoreGui")
-    end--]]
-
-    -- [] -->> Initialize Library (Rayfield, BRAND NEW!) <<-- [] --
-    local Window = Rayfield:CreateWindow({
-        Name = "Zacks Easy Hub | V6.3.0-B | Executed At: "..formattedTime,
-        LoadingTitle = "V6, WE ARE UP!!!",
-        LoadingSubtitle = "Zacks Easy Hub | Productions.",
-        ConfigurationSaving = {
-           Enabled = false,
-           FolderName = nil,
-           FileName = "Zacks Easy Hub"
-        },
-        -- [] -->> Discord invite feature is neat. <<-- [] --
-        Discord = {
-           Enabled = true,
-           Invite = "VJh3kkYzBn",
-           RememberJoins = true
-        },
-        KeySystem = false,
-        KeySettings = {
-           Title = "False | No Key System",
-           Subtitle = "No Key System",
-           Note = "No method of obtaining the key is provided",
-           FileName = "Key",
-           SaveKey = true,
-           GrabKeyFromSite = false,
-           Key = {"None"}
-        }
-    })
-    
-    -- [] -->> Initialize Tabs and Sections <<-- [] --
-    local Tab1 = Window:CreateTab("> Home Tab <", 7733960981)
-    local Section1 = Tab1:CreateSection("||| Home Section |||")
-
-    local Tab11 = Window:CreateTab("> Booths Tab <", 7733914390)
-    local Section11 = Tab11:CreateSection("||| Booths Section |||")
-
-    local Tab2 = Window:CreateTab("> Character [1] <", 7743871002)
-    local Section2 = Tab2:CreateSection("||| Character [1] Section |||")
-
-    local Tab13 = Window:CreateTab("> Character [2] <", 7743871002)
-    local Section13 = Tab13:CreateSection("||| Character [2] Section |||")
-
-    local Tab10 = Window:CreateTab("> Teleports Tab <", 7733764327)
-    local Section10 = Tab10:CreateSection("||| Teleports Section |||")
-
-    local Tab4 = Window:CreateTab("> Chatting Tab <", 7734021300)
-    local Section4 = Tab4:CreateSection("||| Chatting Section |||")
-
-    local Tab5 = Window:CreateTab("> Extras Tab <", 7733954760)
-    local Section5 = Tab5:CreateSection("||| Extras Section |||")
-
-    local Tab17 = Window:CreateTab("> Anims Tab <", 7733954760)
-    local Section17 = Tab17:CreateSection("||| Animation Packages Section |||")
-
-    local Tab9 = Window:CreateTab("> Lighting Tab <", 7734068495)
-    local Section9 = Tab9:CreateSection("||| Lighting Section |||")
-    
-    local Tab16 = Window:CreateTab("> Baseplate Tab <", 7734058260)
-    local Section16 = Tab16:CreateSection("||| Baseplate Section |||")
-    
-    local Tab12 = Window:CreateTab("> Emoting Tab <", 7743871002)
-    local Section12 = Tab12:CreateSection("||| Emoting Section |||")
-    
-    local Tab14 = Window:CreateTab("> CopyAnim Tab <", 7743871002)
-    local Section14 = Tab14:CreateSection("||| Copy Animation Section |||")
-    
-    local Tab15 = Window:CreateTab("> UI Tab <", 7734022107)
-    local Section15 = Tab15:CreateSection("||| UI Control Section |||")
     wait(0.2)
     local TeleportService = game:GetService("TeleportService")
     local Players = game:GetService("Players")
@@ -6525,7 +6524,6 @@ local function create_setup()
         getgenv().GetLoopRunning = false
         getgenv().GetLoopRunning = false
         getgenv().LmaoGetMuted = false
-        getgenv().GetDataResetLighting = false
         wait(0.2)
         Rayfield:Destroy()
         wait(1)
@@ -6545,7 +6543,6 @@ local function create_setup()
         getgenv().GetLoopRunning = false
         getgenv().GetLoopRunning = false
         getgenv().LmaoGetMuted = false
-        getgenv().GetDataResetLighting = false
         wait(.3)
         Rayfield:Destroy()
     end,})
