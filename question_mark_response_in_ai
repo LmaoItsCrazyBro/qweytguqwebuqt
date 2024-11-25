@@ -3526,87 +3526,64 @@ local function loadGUI()
         game:GetService("ReplicatedStorage"):WaitForChild("DeleteInventory"):FireServer()
     end,})
 
-    local GrabEverything = Tab5:CreateButton({
-    Name = "Grab All Tools",
-    Callback = function()
-        local gamePassId = 951459548
-
-        local function verify_pass()
-            local success, hasPass = pcall(function()
-                return game:GetService("MarketplaceService"):UserOwnsGamePassAsync(game.Players.LocalPlayer.UserId, gamePassId)
-            end)
-            if success then
-                return hasPass
-            else
-                warn("Error checking game pass ownership:", hasPass)
-                return false
-            end
-        end
-
-        local check_gamepass = verify_pass()
-
-        if not check_gamepass then
-            getgenv().shouldGrabTools = false
-            return Notify_User("Error:", "You don't have the required 'Admin' GamePass!", 6)
-        end
-
-        local Rep_Storage = game:GetService("ReplicatedStorage")
-        local Tool_Event = Rep_Storage:FindFirstChild("ToolEvent") or Rep_Storage:WaitForChild("ToolEvent")
-
-        Tool_Event:FireServer("Bag")
-        Tool_Event:FireServer("Brick")
-        Tool_Event:FireServer("Camera")
-        Tool_Event:FireServer("Coil")
-        Tool_Event:FireServer("Doll")
-        Tool_Event:FireServer("Fit")
-        Tool_Event:FireServer("Gun")
-        Tool_Event:FireServer("Horrible")
-        Tool_Event:FireServer("Hoverboard")
-        Tool_Event:FireServer("Knife")
-        Tool_Event:FireServer("Motor")
-        Tool_Event:FireServer("Pistol")
-        Tool_Event:FireServer("Spray")
-        Tool_Event:FireServer("Suitbag")
-        Tool_Event:FireServer("Tele")
-        Tool_Event:FireServer("Torch")
-        Tool_Event:FireServer("Vehicle")
-        Tool_Event:FireServer("Wand")
-    end,})
-
-    local getEverything = Tab5:CreateToggle({
-    Name = "Loop Grab All Tools",
-    CurrentValue = false,
-    Flag = "grabbedAllThat",
-    Callback = function(grabFreeTools)
-    local gamePassId = 951459548
-    local LocalPlayer = game:GetService("Players").LocalPlayer or game.Players.LocalPlayer
-
-    local function check_gamepass_func()
-        local success, hasPass = pcall(function()
-            return game:GetService("MarketplaceService"):UserOwnsGamePassAsync(LocalPlayer.UserId, gamePassId)
-        end)
-        if success then
-            return hasPass
-        else
-            warn("Error checking game pass ownership:", hasPass)
-            return false
-        end
-    end
-
-    local owns_gamepass_func = check_gamepass_func()
-
-    if not owns_gamepass_func then
-        getgenv().shouldGrabTools = false
-        return Notify_User("Error:", "You don't have the required 'Admin' GamePass!", 6)
-    end
+    function Tools_Grab_Func()
+        -- [[ <> Old Method <> [In Use.] ]] --
+        ----------------------------
+        if firesignal then
+            local Players = game:GetService("Players") or game.Players
+            local LocalPlayer = Players.LocalPlayer
+            local Player_Gui = LocalPlayer:WaitForChild("PlayerGui") or LocalPlayer:FindFirstChild("PlayerGui")
+            local Menu_Frame = Player_Gui:WaitForChild("Menu") or Player_Gui:FindFirstChild("Menu")
+            local Background_Frame = Menu_Frame:WaitForChild("Background") or Menu_Frame:FindFirstChild("Background")
+            local Tool_Frame = Background_Frame:WaitForChild("Tool") or Background_Frame:FindFirstChild("Tool")
+            local Scrolling_Frame_Tool_Menu = Tool_Frame:WaitForChild("ScrollingFrame") or Tool_Frame:FindFirstChild("ScrollingFrame")
     
-    if grabFreeTools then
-        getgenv().shouldGrabTools = true
-        while getgenv().shouldGrabTools == true do
-            wait()
+            function send_signal_connection(signal_parent)
+                if not firesignal then return warn("'firesignal' is unsupported on this executor! [missing: 'firesignal']") end
+    
+                local Signals = {"Activated", "MouseButton1Down", "MouseButton2Down", "MouseButton1Click", "MouseButton2Click"}
+    
+                for _,v in pairs(signal_parent:GetDescendants()) do
+                    if v:IsA("ImageButton") or v:IsA("TextButton") then
+                        for i,Signal in pairs(Signals) do
+                            firesignal(v[Signal])
+                        end
+                    else
+                        return 
+                    end
+                end
+            end
+    
+            for i, v in pairs(Scrolling_Frame_Tool_Menu:GetDescendants()) do
+                if v:IsA("Frame") or v:FindFirstChildOfClass("Frame") or v:FindFirstChildWhichIsA("Frame") or v.ClassName == "Frame" then
+                    send_signal_connection(v)
+                end
+            end
+        else
+            --[[local gamePassId = 951459548
+
+            local function verify_pass()
+                local success, hasPass = pcall(function()
+                    return game:GetService("MarketplaceService"):UserOwnsGamePassAsync(game.Players.LocalPlayer.UserId, gamePassId)
+                end)
+                if success then
+                    return hasPass
+                else
+                    warn("Error checking game pass ownership:", hasPass)
+                    return false
+                end
+            end
+
+            local check_gamepass = verify_pass()
+
+            if not check_gamepass then
+                getgenv().shouldGrabTools = false
+                return Notify_User("Error:", "You don't have the required 'Admin' GamePass!", 6)
+            end--]]
+
             local Rep_Storage = game:GetService("ReplicatedStorage")
             local Tool_Event = Rep_Storage:FindFirstChild("ToolEvent") or Rep_Storage:WaitForChild("ToolEvent")
-    
+
             Tool_Event:FireServer("Bag")
             Tool_Event:FireServer("Brick")
             Tool_Event:FireServer("Camera")
@@ -3625,14 +3602,69 @@ local function loadGUI()
             Tool_Event:FireServer("Torch")
             Tool_Event:FireServer("Vehicle")
             Tool_Event:FireServer("Wand")
+
+            Notify_User("Alert!:", "If this did not work, you are affected by MIC UP's new changes.", 7)
         end
-    else
-        local Rep_Storage = game:GetService("ReplicatedStorage")
-        local Delete_Inv_Event = Rep_Storage:WaitForChild("DeleteInventory") or Rep_Storage:FindFirstChild("DeleteInventory")
-        getgenv().shouldGrabTools = false
-        wait(0.2)
-        Delete_Inv_Event:FireServer()
+        ----------------------------
+        -- [[ <> New Method <> ]] --
+        ----------------------------
+        --[[local Players = game:GetService("Players") or game.Players
+        local LocalPlayer = Players.LocalPlayer
+        local Player_Gui = LocalPlayer:WaitForChild("PlayerGui") or LocalPlayer:FindFirstChild("PlayerGui")
+        local Menu_Frame = Player_Gui:WaitForChild("Menu") or Player_Gui:FindFirstChild("Menu")
+        local Background_Frame = Menu_Frame:WaitForChild("Background") or Menu_Frame:FindFirstChild("Background")
+        local Tool_Frame = Background_Frame:WaitForChild("Tool") or Background_Frame:FindFirstChild("Tool")
+        local Scrolling_Frame_Tool_Menu = Tool_Frame:WaitForChild("ScrollingFrame") or Tool_Frame:FindFirstChild("ScrollingFrame")
+
+        function send_signal_connection(signal_parent)
+            if not firesignal then return warn("'firesignal' is unsupported on this executor! [missing: 'firesignal']") end
+
+            local Signals = {"Activated", "MouseButton1Down", "MouseButton2Down", "MouseButton1Click", "MouseButton2Click"}
+
+            for _,v in pairs(signal_parent:GetDescendants()) do
+                if v:IsA("ImageButton") or v:IsA("TextButton") then
+                    for i,Signal in pairs(Signals) do
+                        firesignal(v[Signal])
+                    end
+                else
+                    return 
+                end
+            end
+        end
+
+        for i, v in pairs(Scrolling_Frame_Tool_Menu:GetDescendants()) do
+            if v:IsA("Frame") or v:FindFirstChildOfClass("Frame") or v:FindFirstChildWhichIsA("Frame") or v.ClassName == "Frame" then
+                send_signal_connection(v)
+            end
+        end--]]
     end
+
+    local GrabEverything = Tab5:CreateButton({
+    Name = "Grab All Tools",
+    Callback = function()
+        Tools_Grab_Func()
+    end,})
+
+    local getEverything = Tab5:CreateToggle({
+    Name = "Loop Grab All Tools",
+    CurrentValue = false,
+    Flag = "grabbedAllThat",
+    Callback = function(grabFreeTools)
+        local LocalPlayer = game:GetService("Players").LocalPlayer or game.Players.LocalPlayer
+        
+        if grabFreeTools then
+            getgenv().shouldGrabTools = true
+            while getgenv().shouldGrabTools == true do
+                wait()
+                Tools_Grab_Func()
+            end
+        else
+            local Rep_Storage = game:GetService("ReplicatedStorage")
+            local Delete_Inv_Event = Rep_Storage:WaitForChild("DeleteInventory") or Rep_Storage:FindFirstChild("DeleteInventory")
+            getgenv().shouldGrabTools = false
+            wait(0.2)
+            Delete_Inv_Event:FireServer()
+        end
     end,})
     wait(0.3)
     local gamePassId = 951459548
@@ -3654,8 +3686,7 @@ local function loadGUI()
 
     if not owns_gamepass_func then
         getgenv().shouldGrabTools = false
-        getEverything:Set(false)
-        Notify_User("Error:", "You don't own the required 'Admin' gamepass!", 6)
+        Notify_User("Error:", "You do not own 'Admin', [GamePass] | Data Set.", 6)
     end
 
     local viewBooth = Tab11:CreateToggle({
@@ -3693,7 +3724,7 @@ local function loadGUI()
             local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
     
             getgenv().viewing_booth = false
-            wait(0.5)
+            wait(0.2)
             Workspace.CurrentCamera.CameraSubject = Character
         end
     end,})
@@ -3707,26 +3738,26 @@ local function loadGUI()
             getgenv().FOVZoomSliding = true
             while getgenv().FOVZoomSliding == true do
             wait()
-            local Players_Service = game:GetService("Players") or cloneref(game:GetService("Players")) or game.Players or game:FindService("Players")
-            local Workspace_Service = game:GetService("Workspace") or cloneref(game:GetService("Workspace")) or workspace or game.Workspace or game:FindService("Workspace")
-            local player = Players_Service.LocalPlayer
-            local camera = Workspace_Service.CurrentCamera
-            local startFOV = 70
-            local endFOV = 120
-            local duration = 3
-            local smoothness = 0.02
-        
-            local function smoothFOV()
-                for elapsedTime = 0, duration, smoothness do
-                    local alpha = math.clamp(elapsedTime / duration, 0, 1)
-                    camera.FieldOfView = startFOV + (endFOV - startFOV) * alpha
-                    wait(smoothness)
+                local Players_Service = game:GetService("Players") or cloneref(game:GetService("Players")) or game.Players or game:FindService("Players")
+                local Workspace_Service = game:GetService("Workspace") or cloneref(game:GetService("Workspace")) or workspace or game.Workspace or game:FindService("Workspace")
+                local player = Players_Service.LocalPlayer
+                local camera = Workspace_Service.CurrentCamera
+                local startFOV = 70
+                local endFOV = 120
+                local duration = 3
+                local smoothness = 0.02
+            
+                local function smoothFOV()
+                    for elapsedTime = 0, duration, smoothness do
+                        local alpha = math.clamp(elapsedTime / duration, 0, 1)
+                        camera.FieldOfView = startFOV + (endFOV - startFOV) * alpha
+                        wait(smoothness)
+                    end
+                startFOV, endFOV = endFOV, startFOV
                 end
-            startFOV, endFOV = endFOV, startFOV
+            
+                smoothFOV()
             end
-        
-            smoothFOV()
-        end
         else
             local Workspace_Service = game:GetService("Workspace")
 
