@@ -1432,7 +1432,7 @@ local function loadGUI()
     local claimRandomBooth = Tab11:CreateButton({
     Name = "Claim Random Booth",
     Callback = function()
-        Notify_User("Note:", "Make sure you are not invisible when doing this!", 6.5)
+        notify("Note:", "Make sure you are not invisible when doing this!", 6.5)
         task.wait(.2)
         local Folder = game:GetService("Workspace").Booth
 
@@ -1595,7 +1595,7 @@ local function loadGUI()
         local Folder = game:GetService("Workspace").Booth
         local find_plr_func_booth = findplr(takeThatBooth)
 
-        Notify_User("Note:", "Make sure you are not invisible when doing this!", 6.5)
+        notify("Note:", "Make sure you are not invisible when doing this!", 6.5)
         task.wait(.2)
 
         if find_plr_func_booth == game.Players.LocalPlayer then
@@ -1700,7 +1700,7 @@ local function loadGUI()
         local Folder = game:GetService("Workspace").Booth
         local find_plr_func_booth = findplr(unclaimTheirBooth)
 
-        Notify_User("Note:", "Make sure you are not invisible when doing this!", 6.5)
+        notify("Note:", "Make sure you are not invisible when doing this!", 6.5)
         task.wait(.2)
 
         if find_plr_func_booth == game.Players.LocalPlayer then
