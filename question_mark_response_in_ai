@@ -3354,7 +3354,12 @@ local function loadGUI()
         if ingame_music then
             getgenv().plr_music_menu = true
             local Local_Player = game:GetService("Players").LocalPlayer
-            local Shuffle_Music_Frame = Local_Player:WaitForChild("PlayerGui"):WaitForChild("Menu"):WaitForChild("Background"):WaitForChild("Music"):WaitForChild("Shuffle")
+            local PlayerGui = Local_Player:WaitForChild("PlayerGui")
+            local Menu = PlayerGui:WaitForChild("Menu")
+            local Background = Menu:WaitForChild("Background")
+            local Music = Background:WaitForChild("Music")
+            local Stop = Music:WaitForChild("Stop")
+            local Shuffle_Music_Frame = Music:WaitForChild("Shuffle")
             local Signals = {"Activated", "MouseButton1Down", "MouseButton2Down", "MouseButton1Click", "MouseButton2Click"}
             
             if firesignal then
@@ -3372,7 +3377,25 @@ local function loadGUI()
                 return Notify_User("Error:", "Your executor does not support 'firesignal'!", 6)
             end
         else
+            local Local_Player = game:GetService("Players").LocalPlayer
+            local PlayerGui = Local_Player:WaitForChild("PlayerGui")
+            local Menu = PlayerGui:WaitForChild("Menu")
+            local Background = Menu:WaitForChild("Background")
+            local Music = Background:WaitForChild("Music")
+            local Stop = Music:WaitForChild("Stop")
             getgenv().plr_music_menu = false
+            task.wait(0.3)
+            if firesignal then
+                for _,v in pairs(Stop:GetDescendants()) do
+                    if v:IsA("ImageButton") or v:IsA("TextButton") then
+                        for i,Signal in pairs(Signals) do
+                            firesignal(v[Signal])
+                        end
+                    end
+                end
+            else
+                return 
+            end
         end
     end,})
 
