@@ -2344,7 +2344,7 @@ local function loadGUI()
         Animate.idle.Animation2.AnimationId = "http://www.roblox.com/asset/?id=891633237"
         Animate.walk.WalkAnim.AnimationId = "http://www.roblox.com/asset/?id=1083473930"
         Animate.run.RunAnim.AnimationId = "http://www.roblox.com/asset/?id=1083216690"
-        Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=616115533"
+        Animate.jump.JumpAnim.AnimationId = "http://www.roblox.com/asset/?id=104325245285198"
         Animate.climb.ClimbAnim.AnimationId = "http://www.roblox.com/asset/?id=845392038"
         Animate.fall.FallAnim.AnimationId = "http://www.roblox.com/asset/?id=845396048"
     
