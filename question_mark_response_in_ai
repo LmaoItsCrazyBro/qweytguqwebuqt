@@ -1873,63 +1873,73 @@ local function loadGUI()
     CurrentValue = false,
     Flag = "BypassNoteBoard",
     Callback = function(theNote)     
-        local Replicated_Storage = game:GetService("ReplicatedStorage") or cloneref(game:GetService("ReplicatedStorage")) or game.ReplicatedStorage or game:FindService("ReplicatedStorage")
+        local Replicated_Storage = game:GetService("ReplicatedStorage") or cloneref(game:GetService("ReplicatedStorage"))
         local Submit_Note_Remote = Replicated_Storage:FindFirstChild("SubmitTextEvent") or Replicated_Storage:WaitForChild("SubmitTextEvent")
 
         if theNote then
             getgenv().crazyNote = true
             while getgenv().crazyNote == true do
-            wait()
+            wait(1.5)
                 local args = {
                     [1] = "ɓ׀丅ㄈȟ"
                 }
         
                 Submit_Note_Remote:FireServer(unpack(args))
+                task.wait(1)
                 local args = {
                     [1] = "ӻȕㄈҟ"
                 }
         
                 Submit_Note_Remote:FireServer(unpack(args))
+                task.wait(1)
                 local args = {
                     [1] = "ㄈȕ冂丅"
                 }
         
                 Submit_Note_Remote:FireServer(unpack(args))
+                task.wait(1)
                 local args = {
                     [1] = "ȿȴȕ丅"
                 }
         
                 Submit_Note_Remote:FireServer(unpack(args))
+                task.wait(1)
                 local args = {
                     [1] = "ҟҟҟ"
                 }
         
                 Submit_Note_Remote:FireServer(unpack(args))
+                task.wait(1)
                 local args = {
                     [1] = "ŗȇ丅ẳŗȡ"
                 }
         
                 Submit_Note_Remote:FireServer(unpack(args))
+                task.wait(1)
                 local args = {
                     [1] = "ώȇȇȡ"
                 }
         
                 Submit_Note_Remote:FireServer(unpack(args))
+                task.wait(1)
                 local args = {
                     [1] = "ώȟόŗȇ"
                 }
         
                 Submit_Note_Remote:FireServer(unpack(args))
+                task.wait(1)
                 local args = {
                     [1] = "ㄈȕɱ"
                 }
         
                 Submit_Note_Remote:FireServer(unpack(args))
+                task.wait(1)
                 local args = {
                     [1] = "ɓ׀ɠ ẳȿȿ"
                 }
         
                 Submit_Note_Remote:FireServer(unpack(args))
+                task.wait(1)
             end
         else
             getgenv().crazyNote = false
