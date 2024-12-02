@@ -24,21 +24,22 @@ local emotesGui = game:GetService("CoreGui"):FindFirstChild("Emotes")
 
 if not emotesGui then
     warn("ScreenGui 'Emotes' not found in CoreGui")
+    return 
+end
+
+local function updateButtonState()
+    if emotesGui.Enabled then
+        toggleButton.Text = "[Emotes: ON]"
+        toggleButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+    else
+        toggleButton.Text = "[Emotes: OFF]"
+        toggleButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+    end
 end
 
 local function toggleEmotes()
-    if emotesGui then
-        emotesGui.Enabled = not emotesGui.Enabled
-        if emotesGui.Enabled then
-            toggleButton.Text = "[Emotes: ON]"
-            toggleButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
-        else
-            toggleButton.Text = "[Emotes: OFF]"
-            toggleButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-        end
-    else
-        warn("ScreenGui 'Emotes' not found in CoreGui")
-    end
+    emotesGui.Enabled = not emotesGui.Enabled
+    updateButtonState()
 end
 
 toggleButton.MouseButton1Click:Connect(toggleEmotes)
@@ -55,3 +56,7 @@ game:GetService("UserInputService").TouchTap:Connect(function(touchPositions, ga
         end
     end
 end)
+
+emotesGui:GetPropertyChangedSignal("Enabled"):Connect(updateButtonState)
+
+updateButtonState()
