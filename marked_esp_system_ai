@@ -242,7 +242,7 @@ local function LoadEmotes()
 			task.wait(5)
 			return getCatalogPage()
 		end
-		
+
 		return catalogPage
 	end
 	
@@ -300,7 +300,7 @@ wait()
 local RefreshButton = Instance.new("TextButton")
 RefreshButton.BorderSizePixel = 0
 RefreshButton.AnchorPoint = Vector2.new(0.5, 0.5)
-RefreshButton.Position = UDim2.new(0.5, 0, -0.15, 0)
+RefreshButton.Position = UDim2.new(0.899999976, 0, -0.180000007, 0)
 RefreshButton.Size = UDim2.new(0.2, 0, 0.1, 0)
 RefreshButton.TextScaled = true
 RefreshButton.TextColor3 = Color3.new(1, 1, 1)
@@ -322,10 +322,11 @@ RefreshButton.MouseButton1Click:Connect(function()
 	Corner:Clone().Parent = Loading
 
 	LoadEmotes()
+	wait(0.5)
+	Loading:Destroy()
 	if LocalPlayer.Character then
 		CharacterAdded(LocalPlayer.Character)
 	end
-	Loading:Destroy()
 end)
 
 local function openemotes(name, state, input)
