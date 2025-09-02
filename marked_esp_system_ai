@@ -232,6 +232,19 @@ local function LoadEmotes()
 	params.IncludeOffSale = true
 	params.Limit = 120
 	Emotes = {}
+
+	local function getCatalogPage()
+		local success, catalogPage = pcall(function()
+			return AvatarEditorService:SearchCatalog(params)
+		end)
+
+		if not success then
+			task.wait(5)
+			return getCatalogPage()
+		end
+		
+		return catalogPage
+	end
 	
 	local catalogPage = getCatalogPage()
 	local pages = {}
