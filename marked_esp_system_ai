@@ -1,4 +1,6 @@
 --keybind to open is comma
+--doesn't close
+--NOW SUPPORTS UGC EMOTES, CAN LOAD ALL! AND CAN REFRESH!
 
 local IsStudio = false
 
@@ -143,7 +145,7 @@ local function createsort(order, text, sort)
 	end)
 	return CreatedSort
 end
-
+wait(0.1)
 createsort(1, "Newest First", "newestfirst")
 createsort(2, "Oldest First", "oldestfirst")
 createsort(3, "Alphabetically First", "alphabeticfirst")
@@ -222,6 +224,97 @@ end)
 Corner:Clone().Parent = SearchBar
 SearchBar.Parent = BackFrame
 
+local function LoadEmotes()
+	local params = CatalogSearchParams.new()
+	params.AssetTypes = {Enum.AvatarAssetType.EmoteAnimation}
+	params.SortType = Enum.CatalogSortType.RecentlyCreated
+	params.SortAggregation = Enum.CatalogSortAggregation.AllTime
+	params.IncludeOffSale = true
+	params.Limit = 120
+	Emotes = {}
+	
+	local catalogPage = getCatalogPage()
+	local pages = {}
+	while true do
+		local currentPage = catalogPage:GetCurrentPage()
+		table.insert(pages, currentPage)
+		if catalogPage.IsFinished then
+			break
+		end
+		local function AdvanceToNextPage()
+			local success = pcall(function()
+				catalogPage:AdvanceToNextPageAsync()
+			end)
+			if not success then
+				task.wait(5)
+				return AdvanceToNextPage()
+			end
+		end
+		AdvanceToNextPage()
+	end
+
+	local totalEmotes = {}
+	for _, page in pairs(pages) do
+		for _, emote in pairs(page) do
+			table.insert(totalEmotes, emote)
+		end
+	end
+
+	for i, Emote in pairs(totalEmotes) do
+		AddEmote(Emote.Name, Emote.Id, Emote.Price)
+	end
+
+	AddEmote("Arm Wave", 5915773155)
+	AddEmote("Head Banging", 5915779725)
+	AddEmote("Face Calisthenics", 9830731012)
+
+	table.sort(Emotes, function(a, b) return a.index < b.index end)
+	for i,v in pairs(Emotes) do v.sort.newestfirst = i end
+	table.sort(Emotes, function(a, b) return a.index > b.index end)
+	for i,v in pairs(Emotes) do v.sort.oldestfirst = i end
+	table.sort(Emotes, function(a, b) return a.name:lower() < b.name:lower() end)
+	for i,v in pairs(Emotes) do v.sort.alphabeticfirst = i end
+	table.sort(Emotes, function(a, b) return a.name:lower() > b.name:lower() end)
+	for i,v in pairs(Emotes) do v.sort.alphabeticlast = i end
+	table.sort(Emotes, function(a, b) return a.price < b.price end)
+	for i,v in pairs(Emotes) do v.sort.lowestprice = i end
+	table.sort(Emotes, function(a, b) return a.price > b.price end)
+	for i,v in pairs(Emotes) do v.sort.highestprice = i end
+end
+wait(0.2)
+LoadEmotes()
+wait()
+local RefreshButton = Instance.new("TextButton")
+RefreshButton.BorderSizePixel = 0
+RefreshButton.AnchorPoint = Vector2.new(0.5, 0.5)
+RefreshButton.Position = UDim2.new(0.5, 0, -0.15, 0)
+RefreshButton.Size = UDim2.new(0.2, 0, 0.1, 0)
+RefreshButton.TextScaled = true
+RefreshButton.TextColor3 = Color3.new(1, 1, 1)
+RefreshButton.BackgroundColor3 = Color3.new(0, 0, 0)
+RefreshButton.BackgroundTransparency = 0.3
+RefreshButton.Text = "Refresh"
+Corner:Clone().Parent = RefreshButton
+RefreshButton.Parent = BackFrame
+RefreshButton.MouseButton1Click:Connect(function()
+	Loading = Instance.new("TextLabel", BackFrame)
+	Loading.AnchorPoint = Vector2.new(0.5, 0.5)
+	Loading.Text = "Refreshing..."
+	Loading.TextColor3 = Color3.new(1, 1, 1)
+	Loading.BackgroundColor3 = Color3.new(0, 0, 0)
+	Loading.TextScaled = true
+	Loading.BackgroundTransparency = 0.5
+	Loading.Size = UDim2.fromScale(0.2, 0.1)
+	Loading.Position = UDim2.fromScale(0.5, 0.2)
+	Corner:Clone().Parent = Loading
+
+	LoadEmotes()
+	if LocalPlayer.Character then
+		CharacterAdded(LocalPlayer.Character)
+	end
+	Loading:Destroy()
+end)
+
 local function openemotes(name, state, input)
 	if state == Enum.UserInputState.Begin then
 		ScreenGui.Enabled = not ScreenGui.Enabled
@@ -282,7 +375,6 @@ if not game:IsLoaded() then
 end
 
 local LocalPlayer = Players.LocalPlayer
-
 if IsStudio then
 	ScreenGui.Parent = LocalPlayer.PlayerGui
 else
@@ -343,110 +435,6 @@ local function WaitForChildOfClass(parent, class)
 	end
 	return child
 end
-
-local params = CatalogSearchParams.new()
-params.AssetTypes = {Enum.AvatarAssetType.EmoteAnimation}
-params.SortType = Enum.CatalogSortType.RecentlyCreated
-params.SortAggregation = Enum.CatalogSortAggregation.AllTime
-params.IncludeOffSale = true
-params.CreatorName = "Roblox"
-params.Limit = 120
-
-local function getCatalogPage()
-	local success, catalogPage = pcall(function()
-		return AvatarEditorService:SearchCatalog(params)
-	end)
-	if not success then
-		task.wait(5)
-		return getCatalogPage()
-	end
-	return catalogPage
-end
-
-local catalogPage = getCatalogPage()
-
-local pages = {}
-
-while true do
-	local currentPage = catalogPage:GetCurrentPage()
-	table.insert(pages, currentPage)
-	if catalogPage.IsFinished then
-		break
-	end
-	local function AdvanceToNextPage()
-		local success = pcall(function()
-			catalogPage:AdvanceToNextPageAsync()
-		end)
-		if not success then
-			task.wait(5)
-			return AdvanceToNextPage()
-		end
-	end
-	AdvanceToNextPage()
-end
-
-local totalEmotes = {}
-for _, page in pairs(pages) do
-	for _, emote in pairs(page) do
-		table.insert(totalEmotes, emote)
-	end
-end
-
-for i, Emote in pairs(totalEmotes) do
-	AddEmote(Emote.Name, Emote.Id, Emote.Price)
-end
-
---unreleased emotes
-AddEmote("Arm Wave", 5915773155)
-AddEmote("Head Banging", 5915779725)
-AddEmote("Face Calisthenics", 9830731012)
-
---finished loading
-Loading:Destroy()
-
---sorting options setup
-table.sort(Emotes, function(a, b)
-	return a.index < b.index
-end)
-for i,v in pairs(Emotes) do
-	v.sort.newestfirst = i
-end
-
-table.sort(Emotes, function(a, b)
-	return a.index > b.index
-end)
-for i,v in pairs(Emotes) do
-	v.sort.oldestfirst = i
-end
-
-table.sort(Emotes, function(a, b)
-	return a.name:lower() < b.name:lower()
-end)
-for i,v in pairs(Emotes) do
-	v.sort.alphabeticfirst = i
-end
-
-table.sort(Emotes, function(a, b)
-	return a.name:lower() > b.name:lower()
-end)
-for i,v in pairs(Emotes) do
-	v.sort.alphabeticlast = i
-end
-
-table.sort(Emotes, function(a, b)
-	return a.price < b.price
-end)
-for i,v in pairs(Emotes) do
-	v.sort.lowestprice = i
-end
-
-table.sort(Emotes, function(a, b)
-	return a.price > b.price
-end)
-for i,v in pairs(Emotes) do
-	v.sort.highestprice = i
-end
-
 
 local function IsFileFunc(...)
 	if IsStudio then
